@@ -10,7 +10,7 @@ Use `npm install @sighmir/helix.js`
 ## Example
 
 ```js
-let Helix = require("helix.js");
+let Helix = require("@sighmir/helix.js");
 
 let helix = new Helix('oauth:your_oauth_token')
 let printStreams = async () => {
