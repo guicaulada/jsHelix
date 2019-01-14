@@ -5,7 +5,7 @@ This library is mapped to the https://dev.twitch.tv/docs/api/reference.
 
 ## Installation
 
-Use `npm install helix.js`
+Use `npm install @sighmir/helix.js`
 
 ## Example
 
