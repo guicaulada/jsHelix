@@ -88,6 +88,26 @@ class Helix {
     return JSON.parse(await rp.get(this.url + '/streams/markers?' + qs.stringify(query), { headers: this.headers }))
   }
 
+  async getBroadcasterSubscriptions(query) {
+    return JSON.parse(await rp.get(this.url + '/subscriptions?' + qs.stringify(query), { headers: this.headers }))
+  }
+
+  async getUserSubscriptions(query) {
+    return JSON.parse(await rp.get(this.url + '/subscriptions?' + qs.stringify(query), { headers: this.headers }))
+  }
+
+  async getAllStreamTags(query) {
+    return JSON.parse(await rp.get(this.url + '/tags/streams?' + qs.stringify(query), { headers: this.headers }))
+  }
+
+  async getStreamTags(query) {
+    return JSON.parse(await rp.get(this.url + '/streams/tags?' + qs.stringify(query), { headers: this.headers }))
+  }
+
+  async replaceStreamTags(query) {
+    return JSON.parse(await rp.put(this.url + '/streams/tags', { headers: this.headers, json: query }))
+  }
+
   async getUsers(query) {
     return JSON.parse(await rp.get(this.url + '/users?' + qs.stringify(query), { headers: this.headers }))
   }
