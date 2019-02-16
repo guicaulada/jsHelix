@@ -25,119 +25,79 @@ const qs = require('querystring')
 
 class Helix {
   constructor(oauth) {
-    this.url = 'https://api.twitch.tv/helix'
+    this.url = 'https://api.twitch.tv/helix/'
     this.oauth = oauth
     this.headers = {
       "Authorization": `Bearer ${oauth.replace('oauth:','')}`
     }
   }
 
-  async getExtensionAnalytics(query) {
-    return JSON.parse(await rp.get(this.url + '/analytics/extensions?' + qs.stringify(query), { headers: this.headers }))
+  //async request(method, path, query, passQueryOnHeader=false) {
+  async request(apiCall, query) {
+
+    const httpMethod = apiCall[0],
+      apiURL         = this.url + apiCall[1],
+      queryOnHeader  = ( apiCall[2] || false ),
+      headers        = { headers: this.headers };
+
+    if(queryOnHeader) {
+      headers.json = query;
+    }
+    else {
+      apiURL = apiURL + qs.stringify(query);
+    }
+
+    return JSON.parse((async () => {
+      switch(httpMethod) {
+        case 'get':
+          return await rp.get(apiURL, headers);
+
+        case 'post':
+          return await rp.post(apiURL, headers);
+
+        case 'put':
+          return await rp.put(apiURL, headers);
+      }
+    })());
   }
 
-  async getGameAnalytics(query) {
-    return JSON.parse(await rp.get(this.url + '/analytics/games?' + qs.stringify(query), { headers: this.headers }))
-  }
+  async perform(action, query) {
+    const method = {
+      getExtensionAnalytics:            ['get',  'analytics/extensions?'],
+      getGameAnalytics:                 ['get',  'analytics/games?'],
+      getBitsLeaderboard:               ['get',  'bits/leaderboard?'],
+      createClip:                       ['post', 'clips?'],
+      getClip:                          ['get',  'clips?'],
+      createEntitlementGrantsUploadURL: ['post', 'entitlements/upload?'],
+      getCodeStatus:                    ['get',  'entitlements/codes?'],
+      redeemCode:                       ['post', 'entitlements/codes?'],
+      getTopGames:                      ['get',  'games/top?'],
+      getGames:                         ['get',  'games?'],
+      getStreams:                       ['get',  'streams?'],
+      getStreamsMetadata:               ['get',  'streams/metadata?'],
+      getStreamMarkers:                 ['get',  'streams/markers?'],
+      getBroadcasterSubscriptions:      ['get',  'subscriptions?'],
+      getUserSubscriptions:             ['get',  'subscriptions?'],
+      getAllStreamTags:                 ['get',  'tags/streams?'],
+      getStreamTags:                    ['get',  'streams/tags?'],
+      getUsers:                         ['get',  'users?'],
+      getUsersFollows:                  ['get',  'users/follows?'],
+      updateUser:                       ['put',  'users?'],
+      getUserExtensions:                ['get',  'users/extensions/list?'],
+      getUserActiveExtensions:          ['get',  'users/extensions?'],
+      getVideos:                        ['get',  'videos?'],
+      getWebhookSubscriptions:          ['get',  'webhooks/subscriptions?'],
+      createSteamMarker:                ['post', 'streams/markers', true],
+      updateUserExtensions:             ['put',  'users/extensions', true],
+      replaceStreamTags:                ['put',  'streams/tags', true],
+    };
 
-  async getBitsLeaderboard(query) {
-    return JSON.parse(await rp.get(this.url + '/bits/leaderboard?' + qs.stringify(query), { headers: this.headers }))
-  }
+    if (method.action == undefined) {
+      console.log('Unknown method.');
+      return;
+    }
 
-  async createClip(query) {
-    return JSON.parse(await rp.post(this.url + '/clips?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getClip(query) {
-    return JSON.parse(await rp.get(this.url + '/clips?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async createEntitlementGrantsUploadURL(query) {
-    return JSON.parse(await rp.post(this.url + '/entitlements/upload?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getCodeStatus(query) {
-    return JSON.parse(await rp.get(this.url + '/entitlements/codes?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async redeemCode(query) {
-    return JSON.parse(await rp.post(this.url + '/entitlements/codes?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getTopGames(query) {
-    return JSON.parse(await rp.get(this.url + '/games/top?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getGames(query) {
-    return JSON.parse(await rp.get(this.url + '/games?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getStreams(query) {
-    return JSON.parse(await rp.get(this.url + '/streams?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getStreamsMetadata(query) {
-    return JSON.parse(await rp.get(this.url + '/streams/metadata?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async createSteamMarker(query) {
-    return JSON.parse(await rp.post(this.url + '/streams/markers', { headers: this.headers, json: query }))
-  }
-
-  async getStreamMarkers(query) {
-    return JSON.parse(await rp.get(this.url + '/streams/markers?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getBroadcasterSubscriptions(query) {
-    return JSON.parse(await rp.get(this.url + '/subscriptions?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getUserSubscriptions(query) {
-    return JSON.parse(await rp.get(this.url + '/subscriptions?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getAllStreamTags(query) {
-    return JSON.parse(await rp.get(this.url + '/tags/streams?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getStreamTags(query) {
-    return JSON.parse(await rp.get(this.url + '/streams/tags?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async replaceStreamTags(query) {
-    return JSON.parse(await rp.put(this.url + '/streams/tags', { headers: this.headers, json: query }))
-  }
-
-  async getUsers(query) {
-    return JSON.parse(await rp.get(this.url + '/users?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getUsersFollows(query) {
-    return JSON.parse(await rp.get(this.url + '/users/follows?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async updateUser(query) {
-    return JSON.parse(await rp.put(this.url + '/users?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getUserExtensions(query) {
-    return JSON.parse(await rp.get(this.url + '/users/extensions/list?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getUserActiveExtensions(query) {
-    return JSON.parse(await rp.get(this.url + '/users/extensions?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async updateUserExtensions(query) {
-    return JSON.parse(await rp.put(this.url + '/users/extensions', { headers: this.headers, json: query }))
-  }
-
-  async getVideos(query) {
-    return JSON.parse(await rp.get(this.url + '/videos?' + qs.stringify(query), { headers: this.headers }))
-  }
-
-  async getWebhookSubscriptions(query) {
-    return JSON.parse(await rp.get(this.url + '/webhooks/subscriptions?' + qs.stringify(query), { headers: this.headers }))
+    return await this.request(method.action, query);
   }
 }
 
