@@ -23,81 +23,90 @@ This program comes with ABSOLUTELY NO WARRANTY;\n')
 const rp = require('request-promise');
 const qs = require('querystring')
 
-class Helix {
+class ExtendableProxy {
+  constructor(getset = {}) {
+    return new Proxy(this, getset);
+  }
+}
+
+class Helix extends ExtendableProxy {
   constructor(oauth) {
+    super({
+      get: function (helix, method) {
+        return (query) => helix.perform(method, query)
+      }
+    })
     this.url = 'https://api.twitch.tv/helix/'
     this.oauth = oauth
     this.headers = {
-      "Authorization": `Bearer ${oauth.replace('oauth:','')}`
+      "Authorization": `Bearer ${oauth.replace('oauth:', '')}`
     }
   }
 
-  //async request(method, path, query, passQueryOnHeader=false) {
   async request(apiCall, query) {
+    let httpMethod = apiCall[0],
+      apiURL = this.url + apiCall[1],
+      queryOnHeader = (apiCall[2] || false),
+      headers = { headers: this.headers }
 
-    const httpMethod = apiCall[0],
-      apiURL         = this.url + apiCall[1],
-      queryOnHeader  = ( apiCall[2] || false ),
-      headers        = { headers: this.headers };
-
-    if(queryOnHeader) {
+    if (queryOnHeader) {
       headers.json = query;
     }
     else {
-      apiURL = apiURL + qs.stringify(query);
+      apiURL = apiURL + qs.stringify(query)
     }
 
-    return JSON.parse((async () => {
-      switch(httpMethod) {
+    return JSON.parse(await (async () => {
+      switch (httpMethod) {
         case 'get':
-          return await rp.get(apiURL, headers);
+          return await rp.get(apiURL, headers)
 
         case 'post':
-          return await rp.post(apiURL, headers);
+          return await rp.post(apiURL, headers)
 
         case 'put':
-          return await rp.put(apiURL, headers);
+          return await rp.put(apiURL, headers)
       }
     })());
   }
 
   async perform(action, query) {
     const method = {
-      getExtensionAnalytics:            ['get',  'analytics/extensions?'],
-      getGameAnalytics:                 ['get',  'analytics/games?'],
-      getBitsLeaderboard:               ['get',  'bits/leaderboard?'],
-      createClip:                       ['post', 'clips?'],
-      getClip:                          ['get',  'clips?'],
+      getExtensionAnalytics: ['get', 'analytics/extensions?'],
+      getGameAnalytics: ['get', 'analytics/games?'],
+      getBitsLeaderboard: ['get', 'bits/leaderboard?'],
+      createClip: ['post', 'clips?'],
+      getClip: ['get', 'clips?'],
       createEntitlementGrantsUploadURL: ['post', 'entitlements/upload?'],
-      getCodeStatus:                    ['get',  'entitlements/codes?'],
-      redeemCode:                       ['post', 'entitlements/codes?'],
-      getTopGames:                      ['get',  'games/top?'],
-      getGames:                         ['get',  'games?'],
-      getStreams:                       ['get',  'streams?'],
-      getStreamsMetadata:               ['get',  'streams/metadata?'],
-      getStreamMarkers:                 ['get',  'streams/markers?'],
-      getBroadcasterSubscriptions:      ['get',  'subscriptions?'],
-      getUserSubscriptions:             ['get',  'subscriptions?'],
-      getAllStreamTags:                 ['get',  'tags/streams?'],
-      getStreamTags:                    ['get',  'streams/tags?'],
-      getUsers:                         ['get',  'users?'],
-      getUsersFollows:                  ['get',  'users/follows?'],
-      updateUser:                       ['put',  'users?'],
-      getUserExtensions:                ['get',  'users/extensions/list?'],
-      getUserActiveExtensions:          ['get',  'users/extensions?'],
-      getVideos:                        ['get',  'videos?'],
-      getWebhookSubscriptions:          ['get',  'webhooks/subscriptions?'],
-      createSteamMarker:                ['post', 'streams/markers', true],
-      updateUserExtensions:             ['put',  'users/extensions', true],
-      replaceStreamTags:                ['put',  'streams/tags', true],
-    };
-
-    if (method.action == undefined) {
-      console.log('Unknown method.');
-      return;
+      getCodeStatus: ['get', 'entitlements/codes?'],
+      redeemCode: ['post', 'entitlements/codes?'],
+      getTopGames: ['get', 'games/top?'],
+      getGames: ['get', 'games?'],
+      getStreams: ['get', 'streams?'],
+      getStreamsMetadata: ['get', 'streams/metadata?'],
+      getStreamMarkers: ['get', 'streams/markers?'],
+      getBroadcasterSubscriptions: ['get', 'subscriptions?'],
+      getUserSubscriptions: ['get', 'subscriptions?'],
+      getAllStreamTags: ['get', 'tags/streams?'],
+      getStreamTags: ['get', 'streams/tags?'],
+      getUsers: ['get', 'users?'],
+      getUsersFollows: ['get', 'users/follows?'],
+      updateUser: ['put', 'users?'],
+      getUserExtensions: ['get', 'users/extensions/list?'],
+      getUserActiveExtensions: ['get', 'users/extensions?'],
+      getVideos: ['get', 'videos?'],
+      getWebhookSubscriptions: ['get', 'webhooks/subscriptions?'],
+      createSteamMarker: ['post', 'streams/markers', true],
+      updateUserExtensions: ['put', 'users/extensions', true],
+      replaceStreamTags: ['put', 'streams/tags', true],
     }
 
-    return await this.request(method.action, query);
+    if (method[action] == undefined) {
+      console.log('Unknown method.')
+      return
+    }
+
+    return await this.request(method[action], query)
   }
 }
 
