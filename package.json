@@ -1,6 +1,6 @@
 {
   "name": "@sighmir/helix.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A wrapper for the new Twitch API.",
   "main": "index.js",
   "scripts": {
