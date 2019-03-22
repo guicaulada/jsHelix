@@ -3,7 +3,7 @@ A wrapper for the new Twitch API.
 
 This library is mapped to the https://dev.twitch.tv/docs/api/reference.  
 
-You can get your Twitch token here: https://twitchtokengenerator.com
+You can get your Twitch token here: https://twitchtokengenerator.com.
 
 ## Installation
 
