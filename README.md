@@ -1,29 +1,52 @@
-# Helix.js
-A wrapper for the new Twitch API.  
+# jsHelix #
 
-This library is mapped to the https://dev.twitch.tv/docs/api/reference.  
+**jsHelix** is a Javascript module for working with the [Twitch Helix API](https://dev.twitch.tv/docs/api/reference/).
 
-## Installation
+## Requirements
+* Tested against New Twitch API (Helix)
+* For Node.js you will need the [xmlhttprequest](https://www.npmjs.com/package/xmlhttprequest) library.
 
-Use `npm install @sighmir/helix.js`
+## Documentation ##
+### Getting Started
 
-## Example
+If you are using Node.js, install jsHelix using npm:
+
+```bash
+$ npm install jshelix
+```
+
+You can now require and use jshelix like so:
 
 ```js
-let Helix = require("@sighmir/helix.js");
+let HelixAPI = require('jshelix')
 
-let helix = new Helix('oauth:your_oauth_token')
-let printStreams = async () => {
-  console.log(await helix.getStreams({user_login: 'username'}))
-}
+const HELIX_TOKEN = process.env.HELIX_TOKEN
 
-printStreams()
+let hapi = new HelixAPI(HELIX_TOKEN)
+
+hapi.getCurrentUser().then((user) => {
+  hapi.getChannelRooms(user._id).then((data) => {
+    console.log(data)
+  }).catch(err => console.log(err))
+}).catch(err => console.log(err))
 ```
 
-## License
+Refer to the [Helix API Documentation](https://dev.twitch.tv/docs/api/reference/) and the [jsHelix Example](https://github.com/Sighmir/jsHelix/tree/master/example) for more information.  
+
+### Browser
+
+You can also load this script on your browser like so:
+
+```html
+<script src='https://cdn.jsdelivr.net/npm/jshelix/jsHelix.js'></script>
 ```
-Helix.js - A wrapper for the new Twitch API.
-Copyright (C) 2019  Sighmir
+
+You can now use the class HelixAPI normally on the page, like you would on Node.js.
+
+## License ##
+```
+jsHelix - Helix API Javascript Library.
+Copyright (C) 2019  Guilherme Caulada (Sighmir)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

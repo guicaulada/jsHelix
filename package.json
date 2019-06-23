@@ -1,23 +1,28 @@
 {
-  "name": "@sighmir/helix.js",
-  "version": "1.0.3",
-  "description": "A wrapper for the new Twitch API.",
+  "name": "jshelix",
+  "version": "1.0.0",
+  "description": "Javascript Helix API",
   "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node example/example.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Sighmir/Helix.js.git"
+    "url": "git+https://github.com/Sighmir/jsHelix.git"
   },
-  "author": "Sighmir",
+  "author": "Guilherme Caulada (Sighmir)",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Sighmir/Helix.js/issues"
+    "url": "https://github.com/Sighmir/jsHelix/issues"
   },
-  "homepage": "https://github.com/Sighmir/Helix.js#readme",
+  "homepage": "https://github.com/Sighmir/jsHelix#readme",
   "dependencies": {
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2"
-  }
+    "xmlhttprequest": "^1.8.0"
+  },
+  "keywords": [
+    "helix"
+  ]
 }
