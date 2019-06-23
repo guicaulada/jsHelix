@@ -21,14 +21,16 @@ You can now require and use jshelix like so:
 let HelixAPI = require('jshelix')
 
 const HELIX_TOKEN = process.env.HELIX_TOKEN
+const HELIX_LOGIN = process.env.HELIX_LOGIN
 
 let hapi = new HelixAPI(HELIX_TOKEN)
 
-hapi.getCurrentUser().then((user) => {
-  hapi.getChannelRooms(user._id).then((data) => {
+hapi.getUsers({ login: HELIX_LOGIN }).then((users) => {
+  hapi.getUsersFollows({ from_id: users.data[0].id }).then((data) => {
     console.log(data)
   }).catch(err => console.log(err))
 }).catch(err => console.log(err))
+
 ```
 
 Refer to the [Helix API Documentation](https://dev.twitch.tv/docs/api/reference/) and the [jsHelix Example](https://github.com/Sighmir/jsHelix/tree/master/example) for more information.  
