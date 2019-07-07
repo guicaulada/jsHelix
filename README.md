@@ -5,6 +5,7 @@
 ## Requirements
 * Tested against New Twitch API (Helix)
 * For Node.js you will need the [xmlhttprequest](https://www.npmjs.com/package/xmlhttprequest) library.
+* A Twitch token, get yours here: https://twitchtokengenerator.com
 
 ## Documentation ##
 ### Getting Started
