@@ -9,16 +9,18 @@ class ExtendableProxy {
 }
 
 class HelixAPI extends ExtendableProxy {
-  constructor(token) {
+  constructor(clientId, token) {
     super({
       get: function (hapi, func) {
         if (hapi[func] != null) return hapi[func]
         return function (...params) { return hapi.perform(func, ...params) }
       }
     })
+    this.clientId = clientId
     this.auth = token.replace('oauth:', '')
     this.url = 'https://api.twitch.tv'
     this.headers = {
+      'client-id': clientId,
       'Authorization': `Bearer ${this.auth}`
     }
   }

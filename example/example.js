@@ -1,9 +1,10 @@
 let HelixAPI = require('..') //jshelix
 
-const HELIX_TOKEN = process.env.HELIX_TOKEN
-const HELIX_LOGIN = process.env.HELIX_LOGIN
+const HELIX_CLIENT_ID = process.env.HELIX_CLIENT_ID;
+const HELIX_TOKEN = process.env.HELIX_TOKEN;
+const HELIX_LOGIN = process.env.HELIX_LOGIN;
 
-let hapi = new HelixAPI(HELIX_TOKEN)
+let hapi = new HelixAPI(HELIX_CLIENT_ID, HELIX_TOKEN);
 
 hapi.getUsers({ login: HELIX_LOGIN }).then((users) => {
   hapi.getUsersFollows({ from_id: users.data[0].id }).then((data) => {
