@@ -17,11 +17,11 @@ class HelixAPI extends ExtendableProxy {
       }
     })
     this.clientId = clientId
-    this.auth = token.replace('oauth:', '')
+    this.token = token.replace('oauth:', '')
     this.url = 'https://api.twitch.tv'
     this.headers = {
       'client-id': clientId,
-      'Authorization': `Bearer ${this.auth}`
+      'Authorization': `Bearer ${this.token}`
     }
   }
 
