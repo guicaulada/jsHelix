@@ -6,9 +6,6 @@
   "directories": {
     "example": "example"
   },
-  "scripts": {
-    "test": "node example/example.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Sighmir/jsHelix.git"
@@ -19,10 +16,56 @@
     "url": "https://github.com/Sighmir/jsHelix/issues"
   },
   "homepage": "https://github.com/Sighmir/jsHelix#readme",
+  "scripts": {
+    "example": "node example/example.js",
+    "start": "node dist/index.js",
+    "start:example": "node --no-warnings example/index.js",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
+    "test": "jest --coverage",
+    "test:dev": "jest --coverage --watchAll",
+    "test:staged": "jest --changedSince=HEAD --passWithNoTests",
+    "test:coverage": "jest --coverage | yarn coveralls",
+    "prettier:check": "prettier --list-different 'src/**/*.{ts,tsx}'",
+    "prettier:write": "prettier --write 'src/**/*.{ts,tsx}'",
+    "build": "rm -rf ./dist && tsc",
+    "lint": "eslint . --ext ts",
+    "clean": "rm -rf ./dist && rm -rf ./node_modules"
+  },
   "dependencies": {
     "xmlhttprequest": "^1.8.0"
   },
-  "keywords": [
-    "helix"
-  ]
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.1",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
+    "coveralls": "^3.0.9",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "husky": "^4.2.3",
+    "jest": "^25.1.0",
+    "jest-junit": "^10.0.0",
+    "lint-staged": "^10.0.7",
+    "module-alias": "^2.2.2",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "_moduleAliases": {
+    "@": "./src/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": ["prettier --write", "yarn lint --fix"]
+  },
+  "jest-junit": {
+    "outputDirectory": "coverage"
+  },
+  "keywords": ["helix"]
 }
