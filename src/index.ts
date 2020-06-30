@@ -1,2 +1,2 @@
-import jsHelix from "jshelix";
+import jsHelix from "./jshelix";
 export default jsHelix;

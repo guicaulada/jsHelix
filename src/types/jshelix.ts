@@ -1,5 +1,5 @@
 import * as helix from "./helix";
-import { RequestHeaders } from "./request";
+import { RequestHeaders, RequestResponse } from "./request";
 
 export interface JSHelix {
   url: string;
@@ -15,83 +15,193 @@ export interface JSHelix {
   getExtensionAnalytics: (
     query?: helix.ExtensionAnalyticsQuery,
     options?: helix.Options,
-  ) => Promise<helix.Response<helix.ExtensionAnalyticsData[]>>;
+  ) => Promise<helix.PaginationResponse<helix.ExtensionAnalyticsData[]>>;
   getGameAnalytics: (
     query?: helix.GameAnalyticsQuery,
     options?: helix.Options,
-  ) => Promise<helix.Response<helix.GameAnalyticsData[]>>;
+  ) => Promise<helix.PaginationResponse<helix.GameAnalyticsData[]>>;
 
   // Bits
-  getCheermotes: () => (
+  getCheermotes: (
     query?: helix.CheermotesQuery,
     options?: helix.Options,
   ) => Promise<helix.Response<helix.CheermotesData[]>>;
   getBitsLeaderboard: (
     query?: helix.BitsLeaderboardQuery,
     options?: helix.Options,
-  ) => Promise<helix.Response<helix.BitsLeaderboardData[]>>;
+  ) => Promise<helix.TotalDateRangeResponse<helix.BitsLeaderboardData[]>>;
   getExtensionsTransactions: (
-    query: helix.ExtensionsTransactionsQuery,
+    query: helix.ExtensionTransactionQuery,
     options?: helix.Options,
-  ) => Promise<helix.Response<helix.ExtensionsTransactionsData[]>>;
+  ) => Promise<helix.PaginationResponse<helix.ExtensionTransactionData[]>>;
 
   // Clip
-  createClip: () => helix.Response;
-  getClips: () => helix.Response;
+  createClip: (
+    query: helix.CreateClipQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.CreateClipData[]>>;
+  getClips: (
+    query: helix.ClipQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.ClipData[]>>;
 
   // Entitlements
-  createEntitlementGrantsUploadURL: () => helix.Response;
-  getCodeStatus: () => helix.Response;
-  redeemCode: () => helix.Response;
+  createEntitlementGrantsUploadURL: (
+    query: helix.EntitlementGrantsQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.EntitlementGrantsData[]>>;
+  getCodeStatus: (
+    query: helix.CodeQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.CodeData[]>>;
+  redeemCode: (
+    query: helix.CodeQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.CodeData[]>>;
 
   // Games
-  getTopGames: () => helix.Response;
-  getGames: () => helix.Response;
+  getTopGames: (
+    query?: helix.TopGamesQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.GameData[]>>;
+  getGames: (
+    query: helix.GameQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.GameData[]>>;
 
   // Moderation
-  checkAutoModStatus: () => helix.Response;
-  getBannedUsers: () => helix.Response;
-  getBannedEvents: () => helix.Response;
-  getModerators: () => helix.Response;
-  getModeratorEvents: () => helix.Response;
+  checkAutoModStatus: (
+    query: helix.CheckAutoModQuery,
+    body: helix.CheckAutoModBody,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.CheckAutoModData[]>>;
+  getBannedUsers: (
+    query: helix.BannedUserQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.BannedUserData[]>>;
+  getBannedEvents: (
+    query: helix.BannedEventQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.BannedEventData[]>>;
+  getModerators: (
+    query: helix.ModeratorQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.ModeratorData[]>>;
+  getModeratorEvents: (
+    query: helix.ModeratorEventQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.ModeratorEventData[]>>;
 
   // Search
-  searchCategories: () => helix.Response;
-  searchChannels: () => helix.Response;
+  searchCategories: (
+    query: helix.CategorySearchQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.GameData[]>>;
+  searchChannels: (
+    query: helix.ChannelSearchQuery,
+    options: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.ChannelSearchData[]>>;
 
   // Streams
-  getStreamKey: () => helix.Response;
-  getStreams: () => helix.Response;
-  getStreamsMetadata: () => helix.Response;
-  createStreamMarker: () => helix.Response;
-  getStreamMarkers: () => helix.Response;
+  getStreamKey: (
+    query: helix.StreamKeyQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.StreamKeyData[]>>;
+  getStreams: (
+    query?: helix.StreamQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.StreamData[]>>;
+  getStreamsMetadata: (
+    query: helix.StreamQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.StreamMetadata[]>>;
+  createStreamMarker: (
+    body: helix.CreateStreamMarkerBody,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.CreateStreamMarkerData[]>>;
+  getStreamMarkers: (
+    query: helix.StreamMarkerQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.StreamMarkerData[]>>;
 
   // Channels
-  getChannelInformation: () => helix.Response;
-  modifyChannelInformation: () => helix.Response;
+  getChannelInformation: (
+    query: helix.ChannelInformationQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.ChannelInformationData[]>>;
+  modifyChannelInformation: (
+    query: helix.ModifyChannelInformationQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<RequestResponse>>;
 
   // Subscriptions
-  getBroadcasterSubscriptions: () => helix.Response;
+  getBroadcasterSubscriptions: (
+    query: helix.BroadcasterSubscriptionQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.BroadcasterSubscriptionData[]>>;
 
   // Tags
-  getAllStreamTags: () => helix.Response;
-  getStreamTags: () => helix.Response;
-  replaceStreamTags: () => helix.Response;
+  getAllStreamTags: (
+    query: helix.AllStreamTagsQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.StreamTagData[]>>;
+  getStreamTags: (
+    query: helix.StreamTagsQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.StreamTagData[]>>;
+  replaceStreamTags: (
+    query: helix.StreamTagsQuery,
+    body?: helix.ReplaceStreamTagBody,
+    options?: helix.Options,
+  ) => Promise<RequestResponse>;
 
   // Users
-  createUserFollows: () => helix.Response;
-  deleteUserFollows: () => helix.Response;
-  getUsers: () => helix.Response;
-  getUsersFollows: () => helix.Response;
-  updateUser: () => helix.Response;
-  getUserExtensions: () => helix.Response;
-  getUserActiveExtensions: () => helix.Response;
-  updateUserExtensions: () => helix.Response;
+  createUserFollows: (
+    body: helix.CreateUserFollowsBody,
+    query?: helix.CreateUserFollowsQuery,
+    options?: helix.Options,
+  ) => Promise<RequestResponse>;
+  deleteUserFollows: (
+    query: helix.DeleteUserFollowsQuery,
+    options: helix.Options,
+  ) => Promise<RequestResponse>;
+  getUsers: (
+    query?: helix.UserQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.UserData[]>>;
+  getUsersFollows: (
+    query: helix.UserFollowsQuery,
+    options?: helix.Options,
+  ) => Promise<helix.TotalPaginationResponse<helix.UserFollowData[]>>;
+  updateUser: (
+    query?: helix.UpdateUserQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.UserData[]>>;
+  getUserExtensions: (
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.ExtensionData[]>>;
+  getUserActiveExtensions: (
+    query?: helix.UserActiveExtensionQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.UserExtensionData>>;
+  updateUserExtensions: (
+    body: helix.UpdateUserExtensionBody,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.UserExtensionData>>;
 
   // Videos
-  getVideos: () => helix.Response;
-  getWebhookSubscriptions: () => helix.Response;
+  getVideos: (
+    query: helix.VideoQuery,
+    options?: helix.Options,
+  ) => Promise<helix.PaginationResponse<helix.VideoData[]>>;
+  getWebhookSubscriptions: (
+    query?: helix.WebhookSubscriptionQuery,
+    options?: helix.Options,
+  ) => Promise<helix.TotalPaginationResponse<helix.WebhookSubscriptionData[]>>;
 
   // Hype
-  getHypeTrainEvents: () => helix.Response;
+  getHypeTrainEvents: (
+    query: helix.HypeTrainEventsQuery,
+    options?: helix.Options,
+  ) => Promise<helix.Response<helix.HypeTrainEventData[]>>;
 }

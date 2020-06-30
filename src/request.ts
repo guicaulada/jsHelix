@@ -36,7 +36,7 @@ function serialize(obj?: RequestQuery): string {
       );
     }
   }
-  return str.join("&");
+  return "?" + str.join("&");
 }
 
 function tryJSON<T>(json: string): RequestMessage | T {
@@ -50,11 +50,15 @@ function tryJSON<T>(json: string): RequestMessage | T {
 function getAllResponseHeaders(httpRequest: XMLHttpRequest): RequestHeaders {
   const allHeaders = {} as RequestHeaders;
   const headers = httpRequest.getAllResponseHeaders();
-  const headersLine = headers.split("\\r\\n");
-  for (const line of headersLine) {
-    const header: string[] = line.split(/:(.+)/);
-    allHeaders[header[0]] = header[1];
-  }
+  const lines = headers.trim().split(/[\r\n]+/);
+  lines.forEach(function(line) {
+    const parts = line.split(": ");
+    const header = parts.shift();
+    const value = parts.join(": ");
+    if (header && value) {
+      allHeaders[header] = value;
+    }
+  });
   return allHeaders;
 }
 
