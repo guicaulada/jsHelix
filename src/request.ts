@@ -21,9 +21,9 @@ function serialize(obj?: RequestQuery): string {
   const str = [];
   for (const p in obj) {
     if (Array.isArray(obj[p])) {
-      for (const e of obj[p] as RequestObject[]) {
+      (obj[p] as RequestObject[]).forEach((e) => {
         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(e));
-      }
+      });
     } else {
       str.push(
         encodeURIComponent(p) +
@@ -47,7 +47,7 @@ function getAllResponseHeaders(httpRequest: XMLHttpRequest): RequestHeaders {
   const allHeaders = {} as RequestHeaders;
   const headers = httpRequest.getAllResponseHeaders();
   const lines = headers.trim().split(/[\r\n]+/);
-  lines.forEach(function (line) {
+  lines.forEach((line) => {
     const parts = line.split(": ");
     const header = parts.shift();
     const value = parts.join(": ");
