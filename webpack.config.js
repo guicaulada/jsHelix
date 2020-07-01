@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
+  mode: "production",
   entry: "./src/jshelix.ts",
   devtool: "inline-source-map",
   externals: ["xmlhttprequest"],
