@@ -1,5 +1,7 @@
 export type RequestObject = boolean | string | number;
 
+export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+
 export interface RequestQuery {
   [key: string]: RequestObject | RequestObject[] | undefined;
 }
@@ -18,7 +20,7 @@ export interface RequestHeaders {
 }
 
 export interface RequestOptions {
-  method: string;
+  method: RequestMethod;
   url: string;
   query?: RequestQuery;
   body?: RequestBody;
