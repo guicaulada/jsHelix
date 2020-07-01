@@ -48,7 +48,7 @@ Refer to the [Helix API Documentation](https://dev.twitch.tv/docs/api/reference/
 You can also load this script on your browser like so:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/jshelix/jsHelix.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jshelix/dist/bundle.js"></script>
 ```
 
 You can now use the class HelixAPI normally on the page, like you would on Node.js.

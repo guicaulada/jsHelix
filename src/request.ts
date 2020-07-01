@@ -6,16 +6,12 @@ import {
   RequestQuery,
 } from "./types/request";
 
-function isNode(): boolean {
-  return typeof module !== "undefined" && module.exports;
-}
-
 function newRequest(): XMLHttpRequest {
-  if (isNode()) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { XMLHttpRequest } = require("xmlhttprequest");
+  if (process.env.APP_ENV === "browser") {
     return new XMLHttpRequest();
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { XMLHttpRequest } = require("xmlhttprequest");
     return new XMLHttpRequest();
   }
 }
@@ -51,7 +47,7 @@ function getAllResponseHeaders(httpRequest: XMLHttpRequest): RequestHeaders {
   const allHeaders = {} as RequestHeaders;
   const headers = httpRequest.getAllResponseHeaders();
   const lines = headers.trim().split(/[\r\n]+/);
-  lines.forEach(function(line) {
+  lines.forEach(function (line) {
     const parts = line.split(": ");
     const header = parts.shift();
     const value = parts.join(": ");
@@ -77,7 +73,7 @@ export default function request<T>({
   query,
   headers,
 }: RequestOptions): Promise<T> {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const httpRequest = newRequest();
     httpRequest.open(method, url + serialize(query), true);
     for (const h in headers) {

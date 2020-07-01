@@ -2,7 +2,8 @@
   "name": "jshelix",
   "version": "1.1.1",
   "description": "Javascript Helix API",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "example": "example"
   },
@@ -17,9 +18,8 @@
   },
   "homepage": "https://github.com/Sighmir/jsHelix#readme",
   "scripts": {
-    "example": "node example/example.js",
     "start": "node dist/index.js",
-    "start:example": "node --no-warnings example/index.js",
+    "start:example": "ts-node --no-warnings example/index.ts",
     "start:dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "test": "jest --coverage",
     "test:dev": "jest --coverage --watchAll",
@@ -27,9 +27,11 @@
     "test:coverage": "jest --coverage | yarn coveralls",
     "prettier:check": "prettier --list-different 'src/**/*.{ts,tsx}'",
     "prettier:write": "prettier --write 'src/**/*.{ts,tsx}'",
-    "build": "rm -rf ./dist && tsc",
+    "build": "yarn build:clean && tsc && webpack",
+    "build:clean": "rm -rf ./dist",
     "lint": "eslint . --ext ts",
-    "clean": "rm -rf ./dist && rm -rf ./node_modules"
+    "clean": "yarn build:clean && rm -rf ./node_modules",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "xmlhttprequest": "^1.8.0"
@@ -50,8 +52,11 @@
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.0",
+    "ts-loader": "^7.0.5",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
   "_moduleAliases": {
     "@": "./src/"
@@ -62,10 +67,15 @@
     }
   },
   "lint-staged": {
-    "*.{ts,js}": ["prettier --write", "yarn lint --fix"]
+    "*.{ts,js}": [
+      "prettier --write",
+      "yarn lint --fix"
+    ]
   },
   "jest-junit": {
     "outputDirectory": "coverage"
   },
-  "keywords": ["helix"]
+  "keywords": [
+    "helix"
+  ]
 }
