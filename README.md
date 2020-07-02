@@ -25,10 +25,10 @@ You can now require and use jshelix like so:
 ```ts
 import jsHelix from "jshelix";
 
-const HELIX_CLIENT_ID = process.env.HELIX_CLIENT_ID;
+const HELIX_CLIENT = process.env.HELIX_CLIENT;
 const HELIX_TOKEN = process.env.HELIX_TOKEN;
 
-const hapi = jsHelix(HELIX_CLIENT_ID!, HELIX_TOKEN);
+const hapi = jsHelix(HELIX_CLIENT!, HELIX_TOKEN);
 
 hapi
   .getUsers({ login: "Sighmir" })
