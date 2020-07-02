@@ -1,6 +1,6 @@
 # jsHelix
 
-[![Coverage Status](https://coveralls.io/repos/github/Sighmir/jsHelix/badge.svg?branch=develop)](https://coveralls.io/github/Sighmir/jsHelix?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/Sighmir/jsHelix/badge.svg?branch=develop)](https://coveralls.io/github/Sighmir/jsHelix?branch=develop) [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status)](https://sonarcloud.io/dashboard?branch=develop&id=jsHelix)
 
 **jsHelix** is a Typescript wrapper to the [Twitch Helix API](https://dev.twitch.tv/docs/api/reference/).
 
