@@ -20,8 +20,6 @@ jobs:
         with:
           name: coverage
           path: coverage
-    env:
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
   quality:
     needs: test

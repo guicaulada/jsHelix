@@ -24,13 +24,13 @@
     "test": "jest --coverage",
     "test:dev": "jest --coverage --watchAll",
     "test:staged": "jest --changedSince=HEAD --passWithNoTests",
-    "test:coverage": "jest --coverage | yarn coveralls",
+    "test:clean": "rm -rf ./coverage",
     "prettier:check": "prettier --list-different 'src/**/*.{ts,tsx}'",
     "prettier:write": "prettier --write 'src/**/*.{ts,tsx}'",
     "build": "yarn build:clean && tsc && webpack",
     "build:clean": "rm -rf ./dist",
     "lint": "eslint . --ext ts",
-    "clean": "yarn build:clean && rm -rf ./node_modules",
+    "clean": "yarn build:clean && yarn test:clean && rm -rf ./node_modules",
     "prepublish": "yarn build"
   },
   "dependencies": {
@@ -41,7 +41,6 @@
     "@types/node": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
-    "coveralls": "^3.0.9",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "husky": "^4.2.3",
@@ -67,15 +66,10 @@
     }
   },
   "lint-staged": {
-    "*.{ts,js}": [
-      "prettier --write",
-      "yarn lint --fix"
-    ]
+    "*.{ts,js}": ["prettier --write", "yarn lint --fix"]
   },
   "jest-junit": {
     "outputDirectory": "coverage"
   },
-  "keywords": [
-    "helix"
-  ]
+  "keywords": ["helix"]
 }
