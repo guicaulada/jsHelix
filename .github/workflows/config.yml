@@ -15,7 +15,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - run: yarn install
       - run: yarn lint
-      - run: yarn test:coverage
+      - run: yarn test
       - uses: actions/upload-artifact@v1
         with:
           name: coverage
