@@ -1,4 +1,4 @@
-import { RequestBody, RequestQuery, RequestResponse } from "./request";
+import { RequestResponse } from "./request";
 
 export type integer = number;
 
@@ -60,55 +60,47 @@ export interface Options {
   url?: string;
 }
 
-export interface PaginationCursor extends RequestBody {
+export interface PaginationCursor {
   cursor: string;
 }
 
-export interface DateRange extends RequestQuery {
+export interface DateRange {
   started_at: string;
   ended_at: string;
 }
 
-export interface Data<T extends RequestBody | RequestBody[]>
-  extends RequestBody {
+export interface Data<T> {
   data: T;
 }
 
-export type Response<T extends RequestBody | RequestBody[]> = RequestResponse &
-  Data<T>;
+export type Response<T> = RequestResponse & Data<T>;
 
-export interface TotalResponse<T extends RequestBody | RequestBody[]>
-  extends Response<T> {
+export interface TotalResponse<T> extends Response<T> {
   total: integer;
 }
 
-export interface PaginationResponse<T extends RequestBody | RequestBody[]>
-  extends Response<T> {
+export interface PaginationResponse<T> extends Response<T> {
   pagination?: PaginationCursor;
 }
 
-export interface DateRangeResponse<T extends RequestBody | RequestBody[]>
-  extends Response<T> {
+export interface DateRangeResponse<T> extends Response<T> {
   date_range: DateRange;
 }
 
-export type TotalDateRangeResponse<
-  T extends RequestBody | RequestBody[]
-> = DateRangeResponse<T> & TotalResponse<T>;
+export type TotalDateRangeResponse<T> = DateRangeResponse<T> & TotalResponse<T>;
 
-export type TotalPaginationResponse<
-  T extends RequestBody | RequestBody[]
-> = PaginationResponse<T> & TotalResponse<T>;
+export type TotalPaginationResponse<T> = PaginationResponse<T> &
+  TotalResponse<T>;
 
-export interface AfterPaginationQuery extends RequestQuery {
+export interface AfterPaginationQuery {
   after?: string;
 }
 
-export interface BeforePaginationQuery extends RequestQuery {
+export interface BeforePaginationQuery {
   before?: string;
 }
 
-export interface FirstPaginationQuery extends RequestQuery {
+export interface FirstPaginationQuery {
   first?: integer;
 }
 
@@ -128,12 +120,12 @@ export type FirstlessPaginationQuery =
   | AfterPaginationQuery
   | BeforePaginationQuery;
 
-export interface StartCommercialBody extends RequestBody {
+export interface StartCommercialBody {
   broadcaster_id: string;
   length: CommercialLength;
 }
 
-export interface StartCommercialData extends RequestQuery {
+export interface StartCommercialData {
   length: integer;
   message: string;
   retryAfter: integer;
@@ -147,7 +139,7 @@ export type RangeAnalyticsQuery = BaseAnalyticsQuery & DateRange;
 
 export type AnalyticsQuery = BaseAnalyticsQuery | RangeAnalyticsQuery;
 
-export interface AnalyticsData extends RequestBody {
+export interface AnalyticsData {
   URL: string;
   date_range: DateRange;
   type: AnalyticsType;
@@ -185,21 +177,21 @@ export interface GameAnalyticsData extends AnalyticsData {
   game_id: string;
 }
 
-export interface CheermotesQuery extends RequestQuery {
+export interface CheermotesQuery {
   broadcaster_id?: string;
 }
 
-export interface CheermotesImages extends RequestBody {
+export interface CheermotesImages {
   animated: map<string>;
   static: map<string>;
 }
 
-export interface CheermotesSortedImages extends RequestBody {
+export interface CheermotesSortedImages {
   dark: CheermotesImages;
   light: CheermotesImages;
 }
 
-export interface CheermoteTier extends RequestBody {
+export interface CheermoteTier {
   min_bits: integer;
   id: CheermoteTierId;
   color: string;
@@ -208,7 +200,7 @@ export interface CheermoteTier extends RequestBody {
   show_in_bits_card: boolean;
 }
 
-export interface CheermotesData extends RequestBody {
+export interface CheermotesData {
   prefix: string;
   tiers: CheermoteTier[];
   type: CheermoteType;
@@ -217,14 +209,14 @@ export interface CheermotesData extends RequestBody {
   is_charitable: boolean;
 }
 
-export interface BitsLeaderboardQuery extends RequestQuery {
+export interface BitsLeaderboardQuery {
   count?: integer;
   period?: Period;
   started_at?: string;
   user_id?: string;
 }
 
-export interface BitsLeaderboardData extends RequestBody {
+export interface BitsLeaderboardData {
   user_id: string;
   user_name: string;
   rank: integer;
@@ -236,12 +228,12 @@ export interface ExtensionTransactionQuery extends AfterPaginationQuery {
   id?: repeatable;
 }
 
-export interface ExtensionTransactionCostData extends RequestBody {
+export interface ExtensionTransactionCostData {
   amount: integer;
   type: "bits";
 }
 
-export interface ExtensionTransactionProductData extends RequestBody {
+export interface ExtensionTransactionProductData {
   domain?: string;
   broadcast?: boolean;
   sku: string;
@@ -250,7 +242,7 @@ export interface ExtensionTransactionProductData extends RequestBody {
   inDevelopment: boolean;
 }
 
-export interface ExtensionTransactionData extends RequestBody {
+export interface ExtensionTransactionData {
   id: string;
   timestamp: string;
   broadcaster_id: string;
@@ -261,12 +253,12 @@ export interface ExtensionTransactionData extends RequestBody {
   product_data: ExtensionTransactionProductData;
 }
 
-export interface CreateClipQuery extends RequestQuery {
+export interface CreateClipQuery {
   broadcaster_id: string;
   has_delay?: boolean;
 }
 
-export interface CreateClipData extends RequestBody {
+export interface CreateClipData {
   id: string;
   edit_url: string;
 }
@@ -303,7 +295,7 @@ export type ClipQuery =
   | RangeGameClipQuery
   | RangeIdClipQuery;
 
-export interface ClipData extends RequestBody {
+export interface ClipData {
   id: string;
   url: string;
   embed_url: string;
@@ -320,32 +312,32 @@ export interface ClipData extends RequestBody {
   thumbnail_url: string;
 }
 
-export interface EntitlementGrantsQuery extends RequestQuery {
+export interface EntitlementGrantsQuery {
   manifest_id: string;
   type: "bulk_drops_grant";
 }
 
-export interface EntitlementGrantsData extends RequestBody {
+export interface EntitlementGrantsData {
   url: string;
 }
 
-export interface CodeQuery extends RequestQuery {
+export interface CodeQuery {
   code: repeatable;
   user_id: integer;
 }
 
-export interface CodeData extends RequestBody {
+export interface CodeData {
   code: string;
   status: CodeStatus;
 }
 
 export type TopGamesQuery = PaginationQuery;
 
-export interface IdGameQuery extends RequestQuery {
+export interface IdGameQuery {
   id: repeatable;
 }
 
-export interface NameGameQuery extends RequestQuery {
+export interface NameGameQuery {
   name: repeatable;
 }
 
@@ -354,27 +346,27 @@ export type GameQuery =
   | NameGameQuery
   | (IdGameQuery & NameGameQuery);
 
-export interface GameData extends RequestBody {
+export interface GameData {
   id: string;
   name: string;
   box_art_url: string;
 }
 
-export interface CheckAutoModQuery extends RequestQuery {
+export interface CheckAutoModQuery {
   broadcaster_id: string;
 }
 
-export interface CheckAutoModBodyData extends RequestBody {
+export interface CheckAutoModBodyData {
   msg_id: string;
   msg_text: string;
   user_id: string;
 }
 
-export interface CheckAutoModBody extends RequestBody {
+export interface CheckAutoModBody {
   data: Data<CheckAutoModBodyData[]>;
 }
 
-export interface CheckAutoModData extends RequestBody {
+export interface CheckAutoModData {
   msg_id: string;
   is_permitted: boolean;
 }
@@ -384,7 +376,7 @@ export type BannedUserQuery = FirstlessPaginationQuery & {
   user_id?: repeatable;
 };
 
-export interface BannedUserData extends RequestBody {
+export interface BannedUserData {
   user_id: string;
   user_name: string;
   expires_at: string;
@@ -395,14 +387,14 @@ export type BannedEventQuery = FirstAfterPaginationQuery & {
   user_id?: repeatable;
 };
 
-export interface BannedEventEventData extends RequestBody {
+export interface BannedEventEventData {
   broadcaster_id: string;
   broadcaster_name: string;
   user_id: string;
   user_name: string;
   expires_at: string;
 }
-export interface BannedEventData extends RequestBody {
+export interface BannedEventData {
   id: string;
   event_type: string;
   event_timestamp: string;
@@ -415,24 +407,24 @@ export type ModeratorQuery = AfterPaginationQuery & {
   user_id?: repeatable;
 };
 
-export interface ModeratorData extends RequestBody {
+export interface ModeratorData {
   user_id: string;
   user_name: string;
 }
 
-export interface ModeratorEventQuery extends RequestQuery {
+export interface ModeratorEventQuery {
   broadcaster_id: string;
   user_id?: repeatable;
 }
 
-export interface ModeratorEventEventData extends RequestBody {
+export interface ModeratorEventEventData {
   broadcaster_id: string;
   broadcaster_name: string;
   user_id: string;
   user_name: string;
 }
 
-export interface ModeratorEventData extends RequestBody {
+export interface ModeratorEventData {
   id: string;
   event_type: string;
   event_timestamp: string;
@@ -440,7 +432,7 @@ export interface ModeratorEventData extends RequestBody {
   event_data: ModeratorEventEventData;
 }
 
-export interface SearchQuery extends RequestQuery {
+export interface SearchQuery {
   query: string;
 }
 
@@ -451,7 +443,7 @@ export type ChannelSearchQuery = SearchQuery &
     live_only?: boolean;
   };
 
-export interface OffChannelSearchData extends RequestBody {
+export interface OffChannelSearchData {
   broadcaster_language: string;
   display_name: string;
   game_id: string;
@@ -469,11 +461,11 @@ export type LiveChannelSearchData = OffChannelSearchData & {
 
 export type ChannelSearchData = LiveChannelSearchData | OffChannelSearchData;
 
-export interface StreamKeyQuery extends RequestQuery {
+export interface StreamKeyQuery {
   broadcaster_id: string;
 }
 
-export interface StreamKeyData extends RequestBody {
+export interface StreamKeyData {
   stream_key: string;
 }
 
@@ -484,7 +476,7 @@ export type StreamQuery = PaginationQuery & {
   user_login?: repeatable;
 };
 
-export interface StreamData extends RequestBody {
+export interface StreamData {
   id: string;
   user_id: string;
   user_name: string;
@@ -497,25 +489,25 @@ export interface StreamData extends RequestBody {
   thumbnail_url: string;
 }
 
-export interface OverwatchHero extends RequestBody {
+export interface OverwatchHero {
   role: string;
   name: string;
   ability: string;
 }
 
-export interface OverwatchMetadata extends RequestBody {
+export interface OverwatchMetadata {
   broadcaster: {
     hero?: OverwatchHero;
   };
 }
 
-export interface HearthstoneHero extends RequestBody {
+export interface HearthstoneHero {
   type: string;
   class: string;
   name: string;
 }
 
-export interface HearthstoneMetadata extends RequestBody {
+export interface HearthstoneMetadata {
   broadcaster: {
     hero?: HearthstoneHero;
   };
@@ -524,7 +516,7 @@ export interface HearthstoneMetadata extends RequestBody {
   };
 }
 
-export interface StreamMetadata extends RequestBody {
+export interface StreamMetadata {
   user_id: string;
   user_name: string;
   game_id?: string;
@@ -532,12 +524,12 @@ export interface StreamMetadata extends RequestBody {
   hearthstone?: HearthstoneMetadata;
 }
 
-export interface CreateStreamMarkerBody extends RequestBody {
+export interface CreateStreamMarkerBody {
   user_id: string;
   description?: string;
 }
 
-export interface CreateStreamMarkerData extends RequestBody {
+export interface CreateStreamMarkerData {
   id: integer;
   created_at: string;
   description: string;
@@ -554,7 +546,7 @@ export type VideoStreamMarkerQuery = PaginationQuery & {
 
 export type StreamMarkerQuery = UserStreamMarkerQuery | VideoStreamMarkerQuery;
 
-export interface StreamMarker extends RequestBody {
+export interface StreamMarker {
   id: string;
   created_at: string;
   description: string;
@@ -562,22 +554,22 @@ export interface StreamMarker extends RequestBody {
   URL: string;
 }
 
-export interface StreamMarkerVideo extends RequestBody {
+export interface StreamMarkerVideo {
   video_id: string;
   markers: StreamMarker[];
 }
 
-export interface StreamMarkerData extends RequestBody {
+export interface StreamMarkerData {
   user_id: string;
   user_name: string;
   videos: StreamMarkerVideo[];
 }
 
-export interface ChannelInformationQuery extends RequestQuery {
+export interface ChannelInformationQuery {
   broadcaster_id: string;
 }
 
-export interface ChannelInformationData extends RequestBody {
+export interface ChannelInformationData {
   status: string;
   broadcaster_id: string;
   game_id: string;
@@ -586,7 +578,7 @@ export interface ChannelInformationData extends RequestBody {
   description: string;
 }
 
-export interface ModifyChannelInformationQuery extends RequestQuery {
+export interface ModifyChannelInformationQuery {
   broadcaster_id: string;
   status?: string;
   game_id?: string;
@@ -595,12 +587,12 @@ export interface ModifyChannelInformationQuery extends RequestQuery {
   description?: string;
 }
 
-export interface BroadcasterSubscriptionQuery extends RequestQuery {
+export interface BroadcasterSubscriptionQuery {
   broadcaster_id: string;
   user_id?: repeatable;
 }
 
-export interface BroadcasterSubscriptionData extends RequestBody {
+export interface BroadcasterSubscriptionData {
   broadcaster_id: string;
   broadcaster_name: string;
   is_gift: boolean;
@@ -614,41 +606,41 @@ export type AllStreamTagsQuery = FirstAfterPaginationQuery & {
   tag_id?: repeatable;
 };
 
-export interface StreamTagData extends RequestBody {
+export interface StreamTagData {
   tag_id: string;
   is_auto: boolean;
   localization_names: map<string>;
   localization_descriptions: map<string>;
 }
 
-export interface StreamTagsQuery extends RequestQuery {
+export interface StreamTagsQuery {
   broadcaster_id: string;
 }
 
-export interface ReplaceStreamTagBody extends RequestBody {
+export interface ReplaceStreamTagBody {
   tag_ids: string[];
 }
 
-export interface CreateUserFollowsBody extends RequestBody {
+export interface CreateUserFollowsBody {
   from_id: string;
   to_id: string;
 }
 
-export interface CreateUserFollowsQuery extends RequestQuery {
+export interface CreateUserFollowsQuery {
   allow_notifications?: boolean;
 }
 
-export interface DeleteUserFollowsQuery extends RequestQuery {
+export interface DeleteUserFollowsQuery {
   from_id: string;
   to_id: string;
 }
 
-export interface UserQuery extends RequestQuery {
+export interface UserQuery {
   login?: repeatable;
   id?: repeatable;
 }
 
-export interface UserData extends RequestBody {
+export interface UserData {
   id: string;
   login: string;
   display_name: string;
@@ -677,7 +669,7 @@ export type UserFollowsQuery =
   | UserFollowsToQuery
   | UserFollowsFromAndToQuery;
 
-export interface UserFollowData extends RequestBody {
+export interface UserFollowData {
   from_id: string;
   from_name: string;
   to_id: string;
@@ -685,13 +677,13 @@ export interface UserFollowData extends RequestBody {
   followed_at: string;
 }
 
-export interface UpdateUserQuery extends RequestQuery {
+export interface UpdateUserQuery {
   description?: string;
 }
 
 export type ExtensionType = "component" | "mobile" | "panel" | "overlay";
 
-export interface ExtensionData extends RequestBody {
+export interface ExtensionData {
   id: string;
   version: string;
   name: string;
@@ -699,11 +691,11 @@ export interface ExtensionData extends RequestBody {
   type: ExtensionType[];
 }
 
-export interface UserActiveExtensionQuery extends RequestQuery {
+export interface UserActiveExtensionQuery {
   user_id?: string;
 }
 
-export interface DetailedExtensionData extends RequestBody {
+export interface DetailedExtensionData {
   active?: boolean;
   id?: string;
   version?: string;
@@ -712,7 +704,7 @@ export interface DetailedExtensionData extends RequestBody {
   y?: integer;
 }
 
-export interface UserExtensionData extends RequestBody {
+export interface UserExtensionData {
   panel: {
     [key: string]: DetailedExtensionData;
   };
@@ -726,7 +718,7 @@ export interface UserExtensionData extends RequestBody {
 
 export type UpdateUserExtensionBody = Data<UserExtensionData>;
 
-export interface IdVideoQuery extends RequestQuery {
+export interface IdVideoQuery {
   id: repeatable;
 }
 
@@ -747,7 +739,7 @@ export type GameVideoQuery = OptionalVideoQuery & {
 
 export type VideoQuery = IdVideoQuery | UserVideoQuery | GameVideoQuery;
 
-export interface VideoData extends RequestBody {
+export interface VideoData {
   id: string;
   user_id: string;
   user_name: string;
@@ -766,7 +758,7 @@ export interface VideoData extends RequestBody {
 
 export type WebhookSubscriptionQuery = FirstAfterPaginationQuery;
 
-export interface WebhookSubscriptionData extends RequestBody {
+export interface WebhookSubscriptionData {
   topic: string;
   callback: string;
   expires_at: string;
@@ -778,13 +770,13 @@ export type HypeTrainEventsQuery = FirstPaginationQuery & {
   cursor?: string;
 };
 
-export interface HypeTrainEventContribution extends RequestBody {
+export interface HypeTrainEventContribution {
   total: integer;
   type: string;
   user: string;
 }
 
-export interface HypeTrainEventEventData extends RequestBody {
+export interface HypeTrainEventEventData {
   broadcaster_id: string;
   cooldown_end_time: string;
   expires_at: string;
@@ -797,7 +789,7 @@ export interface HypeTrainEventEventData extends RequestBody {
   total: integer;
 }
 
-export interface HypeTrainEventData extends RequestBody {
+export interface HypeTrainEventData {
   id: string;
   event_type: string;
   event_timestamp: string;
