@@ -73,9 +73,9 @@ export default function request<T>({
   query,
   headers,
 }: RequestOptions): Promise<T> {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     const httpRequest = newRequest();
-    httpRequest.open(method, url + serialize(query), true);
+    httpRequest.open(method, url + serialize(query as RequestQuery), true);
     for (const h in headers) {
       httpRequest.setRequestHeader(h, headers[h]);
     }
