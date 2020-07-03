@@ -1,4 +1,19 @@
+export type RequestObject = boolean | string | number;
+
 export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+
+export interface RequestQuery {
+  [key: string]: RequestObject | RequestObject[] | undefined;
+}
+
+export interface RequestBody {
+  [key: string]:
+    | RequestObject
+    | RequestObject[]
+    | RequestBody
+    | RequestBody[]
+    | undefined;
+}
 
 export interface RequestHeaders {
   [key: string]: string;
