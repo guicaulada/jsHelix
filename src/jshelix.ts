@@ -1,6 +1,6 @@
 import request from "./request";
 import * as helix from "./types/helix";
-import { JSHelix } from "./types/jshelix";
+import { ExecuteArguments, JSHelix, Options } from "./types/jshelix";
 import { RequestHeaders, RequestResponse } from "./types/request";
 
 export default function jsHelix(clientId: string, token?: string): JSHelix {
@@ -14,19 +14,28 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
+  function execute<T>(args: ExecuteArguments): Promise<T> {
+    return request<T>({
+      headers: {
+        ...headers,
+        ...args.options.headers,
+      },
+      method: args.method,
+      url: `${args.options.url || url}${args.path}`,
+      body: args.body,
+      query: args.query,
+    });
+  }
+
   // Ads
   function startCommercial(
     body: helix.StartCommercialBody,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.StartCommercialData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.StartCommercialData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.StartCommercialData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/channels/commercial`,
+      path: "/helix/channels/commercial",
       body,
     });
   }
@@ -34,32 +43,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Analytics
   function getExtensionAnalytics(
     query?: helix.ExtensionAnalyticsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ExtensionAnalyticsData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ExtensionAnalyticsData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ExtensionAnalyticsData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/analytics/extensions`,
+      path: "/helix/analytics/extensions",
       query,
     });
   }
 
   function getGameAnalytics(
     query?: helix.GameAnalyticsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.GameAnalyticsData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.GameAnalyticsData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.GameAnalyticsData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/analytics/games`,
+      path: "/helix/analytics/games",
       query,
     });
   }
@@ -67,48 +68,36 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Bits
   function getCheermotes(
     query?: helix.CheermotesQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CheermotesData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CheermotesData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CheermotesData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/bits/cheermotes`,
+      path: "/helix/bits/cheermotes",
       query,
     });
   }
 
   function getBitsLeaderboard(
     query?: helix.BitsLeaderboardQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.TotalDateRangeResponse<helix.BitsLeaderboardData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.TotalDateRangeResponse<helix.BitsLeaderboardData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.TotalDateRangeResponse<helix.BitsLeaderboardData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/bits/leaderboard`,
+      path: "/helix/bits/leaderboard",
       query,
     });
   }
 
   function getExtensionsTransactions(
     query: helix.ExtensionTransactionQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ExtensionTransactionData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ExtensionTransactionData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ExtensionTransactionData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/extensions/transactions`,
+      path: "/helix/extensions/transactions",
       query,
     });
   }
@@ -116,32 +105,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Clip
   function createClip(
     query: helix.CreateClipQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CreateClipData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CreateClipData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CreateClipData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/clips`,
+      path: "/helix/clips",
       query,
     });
   }
 
   function getClips(
     query: helix.ClipQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ClipData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ClipData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ClipData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/clips`,
+      path: "/helix/clips",
       query,
     });
   }
@@ -149,48 +130,36 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Entitlements
   function createEntitlementGrantsUploadURL(
     query: helix.EntitlementGrantsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.EntitlementGrantsData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.EntitlementGrantsData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.EntitlementGrantsData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/entitlements/upload`,
+      path: "/helix/entitlements/upload",
       query,
     });
   }
 
   function getCodeStatus(
     query: helix.CodeQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CodeData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CodeData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CodeData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/entitlements/codes`,
+      path: "/helix/entitlements/codes",
       query,
     });
   }
 
   function redeemCode(
     query: helix.CodeQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CodeData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CodeData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CodeData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/entitlements/code`,
+      path: "/helix/entitlements/code",
       query,
     });
   }
@@ -198,32 +167,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Games
   function getTopGames(
     query?: helix.TopGamesQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.GameData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.GameData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.GameData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/games/top`,
+      path: "/helix/games/top",
       query,
     });
   }
 
   function getGames(
     query: helix.GameQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.GameData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.GameData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.GameData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/games`,
+      path: "/helix/games",
       query,
     });
   }
@@ -232,16 +193,12 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function checkAutoModStatus(
     query: helix.CheckAutoModQuery,
     body: helix.CheckAutoModBody,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CheckAutoModData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CheckAutoModData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CheckAutoModData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/moderation/enforcements/status`,
+      path: "/helix/moderation/enforcements/status",
       query,
       body,
     });
@@ -249,64 +206,48 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
 
   function getBannedUsers(
     query: helix.BannedUserQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.BannedUserData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.BannedUserData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.BannedUserData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/moderation/banned`,
+      path: "/helix/moderation/banned",
       query,
     });
   }
 
   function getBannedEvents(
     query: helix.BannedEventQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.BannedEventData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.BannedEventData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.BannedEventData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/moderation/banned/events`,
+      path: "/helix/moderation/banned/events",
       query,
     });
   }
 
   function getModerators(
     query: helix.ModeratorQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ModeratorData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ModeratorData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ModeratorData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/moderation/moderators`,
+      path: "/helix/moderation/moderators",
       query,
     });
   }
 
   function getModeratorEvents(
     query: helix.ModeratorEventQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ModeratorEventData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ModeratorEventData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ModeratorEventData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/moderation/moderators/events`,
+      path: "/helix/moderation/moderators/events",
       query,
     });
   }
@@ -314,32 +255,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Search
   function searchCategories(
     query: helix.CategorySearchQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.GameData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.GameData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.GameData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/search/categories`,
+      path: "/helix/search/categories",
       query,
     });
   }
 
   function searchChannels(
     query: helix.ChannelSearchQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.ChannelSearchData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.ChannelSearchData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.ChannelSearchData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/search/channels`,
+      path: "/helix/search/channels",
       query,
     });
   }
@@ -347,80 +280,60 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Streams
   function getStreamKey(
     query: helix.StreamKeyQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.StreamKeyData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.StreamKeyData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.StreamKeyData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/streams/key`,
+      path: "/helix/streams/key",
       query,
     });
   }
 
   function getStreams(
     query?: helix.StreamQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.StreamData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.StreamData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.StreamData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/streams`,
+      path: "/helix/streams",
       query,
     });
   }
 
   function getStreamsMetadata(
     query: helix.StreamQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.StreamMetadata[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.StreamMetadata[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.StreamMetadata[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/streams/metadata`,
+      path: "/helix/streams/metadata",
       query,
     });
   }
 
   function createStreamMarker(
     body: helix.CreateStreamMarkerBody,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.CreateStreamMarkerData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.CreateStreamMarkerData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.CreateStreamMarkerData[]>>({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/streams/markers`,
+      path: "/helix/streams/markers",
       body,
     });
   }
 
   function getStreamMarkers(
     query: helix.StreamMarkerQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.StreamMarkerData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.StreamMarkerData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.StreamMarkerData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/streams/markers`,
+      path: "/helix/streams/markers",
       query,
     });
   }
@@ -428,32 +341,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Channels
   function getChannelInformation(
     query: helix.ChannelInformationQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.ChannelInformationData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.ChannelInformationData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.ChannelInformationData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/channels`,
+      path: "/helix/channels",
       query,
     });
   }
 
   function modifyChannelInformation(
     query: helix.ModifyChannelInformationQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<RequestResponse>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<RequestResponse>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<RequestResponse>>({
+      options,
       method: "PATCH",
-      url: `${options.url || url}/helix/channels`,
+      path: "/helix/channels",
       query,
     });
   }
@@ -461,18 +366,14 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Subscriptions
   function getBroadcasterSubscriptions(
     query: helix.BroadcasterSubscriptionQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.BroadcasterSubscriptionData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<
+    return execute<
       helix.PaginationResponse<helix.BroadcasterSubscriptionData[]>
     >({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/subscriptions`,
+      path: "/helix/subscriptions",
       query,
     });
   }
@@ -480,32 +381,24 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Tags
   function getAllStreamTags(
     query: helix.AllStreamTagsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.StreamTagData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.StreamTagData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.StreamTagData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/tags/streams`,
+      path: "/helix/tags/streams",
       query,
     });
   }
 
   function getStreamTags(
     query: helix.StreamTagsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.StreamTagData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.StreamTagData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.StreamTagData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/streams/tags`,
+      path: "/helix/streams/tags",
       query,
     });
   }
@@ -513,16 +406,12 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function replaceStreamTags(
     query: helix.StreamTagsQuery,
     body?: helix.ReplaceStreamTagBody,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<RequestResponse> {
-    if (!options.headers) options.headers = {};
-    return request<RequestResponse>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<RequestResponse>({
+      options,
       method: "PUT",
-      url: `${options.url || url}/helix/streams/tags`,
+      path: "/helix/streams/tags",
       query,
       body,
     });
@@ -532,16 +421,12 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function createUserFollows(
     body: helix.CreateUserFollowsBody,
     query?: helix.CreateUserFollowsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<RequestResponse> {
-    if (!options.headers) options.headers = {};
-    return request({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute({
+      options,
       method: "POST",
-      url: `${options.url || url}/helix/users/follows`,
+      path: "/helix/users/follows",
       query,
       body,
     });
@@ -549,110 +434,82 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
 
   function deleteUserFollows(
     query: helix.DeleteUserFollowsQuery,
-    options: helix.Options,
+    options: Options,
   ): Promise<RequestResponse> {
-    if (!options.headers) options.headers = {};
-    return request<RequestResponse>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<RequestResponse>({
+      options,
       method: "DELETE",
-      url: `${options.url || url}/helix/users/follows`,
+      path: "/helix/users/follows",
       query,
     });
   }
 
   function getUsers(
     query?: helix.UserQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.UserData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.UserData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.UserData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/users`,
+      path: "/helix/users",
       query,
     });
   }
 
   function getUsersFollows(
     query: helix.UserFollowsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.TotalPaginationResponse<helix.UserFollowData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.TotalPaginationResponse<helix.UserFollowData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.TotalPaginationResponse<helix.UserFollowData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/users/follows`,
+      path: "/helix/users/follows",
       query,
     });
   }
 
   function updateUser(
     query?: helix.UpdateUserQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.UserData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.UserData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.UserData[]>>({
+      options,
       method: "PUT",
-      url: `${options.url || url}/helix/users`,
+      path: "/helix/users",
       query,
     });
   }
 
   function getUserExtensions(
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.ExtensionData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.ExtensionData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.ExtensionData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/users/extensions/list`,
+      path: "/helix/users/extensions/list",
     });
   }
 
   function getUserActiveExtensions(
     query?: helix.UserActiveExtensionQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.UserExtensionData>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.UserExtensionData>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.UserExtensionData>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/users/extensions`,
+      path: "/helix/users/extensions",
       query,
     });
   }
 
   function updateUserExtensions(
     body: helix.UpdateUserExtensionBody,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.UserExtensionData>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.UserExtensionData>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.UserExtensionData>>({
+      options,
       method: "PUT",
-      url: `${options.url || url}/helix/users/extensions`,
+      path: "/helix/users/extensions",
       body,
     });
   }
@@ -660,50 +517,38 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   // Videos
   function getVideos(
     query: helix.VideoQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.PaginationResponse<helix.VideoData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.PaginationResponse<helix.VideoData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.PaginationResponse<helix.VideoData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/videos`,
+      path: "/helix/videos",
       query,
     });
   }
 
   function getWebhookSubscriptions(
     query?: helix.WebhookSubscriptionQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.TotalPaginationResponse<helix.WebhookSubscriptionData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<
+    return execute<
       helix.TotalPaginationResponse<helix.WebhookSubscriptionData[]>
     >({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/webhooks/subscriptions`,
+      path: "/helix/webhooks/subscriptions",
       query,
     });
   }
 
   function getHypeTrainEvents(
     query: helix.HypeTrainEventsQuery,
-    options: helix.Options = {},
+    options: Options = {},
   ): Promise<helix.Response<helix.HypeTrainEventData[]>> {
-    if (!options.headers) options.headers = {};
-    return request<helix.Response<helix.HypeTrainEventData[]>>({
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
+    return execute<helix.Response<helix.HypeTrainEventData[]>>({
+      options,
       method: "GET",
-      url: `${options.url || url}/helix/hypetrain/events`,
+      path: "/helix/hypetrain/events",
       query,
     });
   }
