@@ -20,6 +20,9 @@ jobs:
         with:
           name: coverage
           path: coverage
+    env:
+      HELIX_CLIENT: ${{ secrets.HELIX_CLIENT }}
+      HELIX_TOKEN: ${{ secrets.HELIX_TOKEN }}
 
   quality:
     needs: test
