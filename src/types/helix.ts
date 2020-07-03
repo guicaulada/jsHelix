@@ -55,11 +55,6 @@ export enum SubscriptionTier {
   "Tier 3" = "3000",
 }
 
-export interface Options {
-  headers?: object;
-  url?: string;
-}
-
 export interface PaginationCursor {
   cursor: string;
 }
