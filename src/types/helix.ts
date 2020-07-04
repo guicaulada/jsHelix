@@ -38,6 +38,8 @@ export type Viewable = "private" | "public";
 
 export type VideoTypeQuery = "all" | VideoType;
 
+export type ExtensionType = "component" | "mobile" | "panel" | "overlay";
+
 export type CodeStatus =
   | "SUCCESSFULLY_REDEEMED"
   | "ALREADY_CLAIMED"
@@ -60,60 +62,22 @@ export interface PaginationCursor {
 }
 
 export interface DateRange {
-  started_at: string;
-  ended_at: string;
+  started_at?: string;
+  ended_at?: string;
 }
 
-export interface Data<T> {
+export interface Response<T> extends RequestResponse {
+  total?: integer;
+  pagination?: PaginationCursor;
+  date_range?: DateRange;
   data: T;
 }
 
-export type Response<T> = RequestResponse & Data<T>;
-
-export interface TotalResponse<T> extends Response<T> {
-  total: integer;
-}
-
-export interface PaginationResponse<T> extends Response<T> {
-  pagination?: PaginationCursor;
-}
-
-export interface DateRangeResponse<T> extends Response<T> {
-  date_range: DateRange;
-}
-
-export type TotalDateRangeResponse<T> = DateRangeResponse<T> & TotalResponse<T>;
-
-export type TotalPaginationResponse<T> = PaginationResponse<T> &
-  TotalResponse<T>;
-
-export interface AfterPaginationQuery {
+export interface PaginationQuery {
   after?: string;
-}
-
-export interface BeforePaginationQuery {
   before?: string;
-}
-
-export interface FirstPaginationQuery {
   first?: integer;
 }
-
-export type FirstAfterPaginationQuery = AfterPaginationQuery &
-  FirstPaginationQuery;
-
-export type FirstBeforePaginationQuery = BeforePaginationQuery &
-  FirstPaginationQuery;
-
-export type PaginationQuery =
-  | AfterPaginationQuery
-  | BeforePaginationQuery
-  | FirstAfterPaginationQuery
-  | FirstBeforePaginationQuery;
-
-export type FirstlessPaginationQuery =
-  | AfterPaginationQuery
-  | BeforePaginationQuery;
 
 export interface StartCommercialBody {
   broadcaster_id: string;
@@ -121,18 +85,15 @@ export interface StartCommercialBody {
 }
 
 export interface StartCommercialData {
-  length: integer;
+  length: CommercialLength;
   message: string;
   retryAfter: integer;
 }
 
-export interface BaseAnalyticsQuery extends AfterPaginationQuery {
+export interface AnalyticsQuery extends PaginationQuery, DateRange {
   type?: AnalyticsType;
+  before?: never;
 }
-
-export type RangeAnalyticsQuery = BaseAnalyticsQuery & DateRange;
-
-export type AnalyticsQuery = BaseAnalyticsQuery | RangeAnalyticsQuery;
 
 export interface AnalyticsData {
   URL: string;
@@ -140,33 +101,17 @@ export interface AnalyticsData {
   type: AnalyticsType;
 }
 
-export interface BaseExtensionAnalyticsQuery extends BaseAnalyticsQuery {
+export interface ExtensionAnalyticsQuery extends AnalyticsQuery {
   extension_id?: string;
 }
-
-export interface RangeExtensionAnalyticsQuery extends RangeAnalyticsQuery {
-  extension_id?: string;
-}
-
-export type ExtensionAnalyticsQuery =
-  | BaseExtensionAnalyticsQuery
-  | RangeExtensionAnalyticsQuery;
 
 export interface ExtensionAnalyticsData extends AnalyticsData {
   extension_id: string;
 }
 
-export interface BaseGameAnalyticsQuery extends BaseAnalyticsQuery {
+export interface GameAnalyticsQuery extends AnalyticsQuery {
   game_id?: string;
 }
-
-export interface RangeGameAnalyticsQuery extends RangeAnalyticsQuery {
-  game_id?: string;
-}
-
-export type GameAnalyticsQuery =
-  | BaseGameAnalyticsQuery
-  | RangeGameAnalyticsQuery;
 
 export interface GameAnalyticsData extends AnalyticsData {
   game_id: string;
@@ -176,21 +121,21 @@ export interface CheermotesQuery {
   broadcaster_id?: string;
 }
 
-export interface CheermotesImages {
+export interface CheermotesImagesImages {
   animated: map<string>;
   static: map<string>;
 }
 
-export interface CheermotesSortedImages {
-  dark: CheermotesImages;
-  light: CheermotesImages;
+export interface CheermotesImages {
+  dark: CheermotesImagesImages;
+  light: CheermotesImagesImages;
 }
 
 export interface CheermoteTier {
   min_bits: integer;
   id: CheermoteTierId;
   color: string;
-  images: CheermotesSortedImages;
+  images: CheermotesImages;
   can_cheer: boolean;
   show_in_bits_card: boolean;
 }
@@ -204,11 +149,11 @@ export interface CheermotesData {
   is_charitable: boolean;
 }
 
-export interface BitsLeaderboardQuery {
+export interface BitsLeaderboardQuery extends DateRange {
   count?: integer;
   period?: Period;
-  started_at?: string;
   user_id?: string;
+  ended_at?: never;
 }
 
 export interface BitsLeaderboardData {
@@ -218,9 +163,10 @@ export interface BitsLeaderboardData {
   score: integer;
 }
 
-export interface ExtensionTransactionQuery extends AfterPaginationQuery {
+export interface ExtensionTransactionQuery extends PaginationQuery {
   extension_id: string;
   id?: repeatable;
+  before?: never;
 }
 
 export interface ExtensionTransactionCostData {
@@ -258,37 +204,11 @@ export interface CreateClipData {
   edit_url: string;
 }
 
-export type BaseClipQuery = PaginationQuery;
-
-export type RangeClipQuery = PaginationQuery & DateRange;
-
-export type BroadcasterClipQuery = BaseClipQuery & {
-  broadcaster_id: string;
-};
-
-export type RangeBroadcasterClipQuery = RangeClipQuery & {
-  broadcaster_id: string;
-};
-
-export type GameClipQuery = BaseClipQuery & {
-  game_id: string;
-};
-
-export type RangeGameClipQuery = RangeClipQuery & GameClipQuery;
-
-export type IdClipQuery = BaseClipQuery & {
-  id: repeatable;
-};
-
-export type RangeIdClipQuery = RangeClipQuery & IdClipQuery;
-
-export type ClipQuery =
-  | BroadcasterClipQuery
-  | GameClipQuery
-  | IdClipQuery
-  | RangeBroadcasterClipQuery
-  | RangeGameClipQuery
-  | RangeIdClipQuery;
+export interface ClipQuery extends PaginationQuery, DateRange {
+  broadcaster_id?: string;
+  game_id?: string;
+  id?: repeatable;
+}
 
 export interface ClipData {
   id: string;
@@ -326,20 +246,10 @@ export interface CodeData {
   status: CodeStatus;
 }
 
-export type TopGamesQuery = PaginationQuery;
-
-export interface IdGameQuery {
-  id: repeatable;
+export interface GameQuery {
+  id?: repeatable;
+  name?: repeatable;
 }
-
-export interface NameGameQuery {
-  name: repeatable;
-}
-
-export type GameQuery =
-  | IdGameQuery
-  | NameGameQuery
-  | (IdGameQuery & NameGameQuery);
 
 export interface GameData {
   id: string;
@@ -347,29 +257,30 @@ export interface GameData {
   box_art_url: string;
 }
 
-export interface CheckAutoModQuery {
+export interface AutoModQuery {
   broadcaster_id: string;
 }
 
-export interface CheckAutoModBodyData {
+export interface AutoModBodyData {
   msg_id: string;
   msg_text: string;
   user_id: string;
 }
 
-export interface CheckAutoModBody {
-  data: Data<CheckAutoModBodyData[]>;
+export interface AutoModBody {
+  data: AutoModBodyData[];
 }
 
-export interface CheckAutoModData {
+export interface AutoModData {
   msg_id: string;
   is_permitted: boolean;
 }
 
-export type BannedUserQuery = FirstlessPaginationQuery & {
+export interface BannedUserQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-};
+  first?: never;
+}
 
 export interface BannedUserData {
   user_id: string;
@@ -377,10 +288,11 @@ export interface BannedUserData {
   expires_at: string;
 }
 
-export type BannedEventQuery = FirstAfterPaginationQuery & {
+export interface BannedEventQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-};
+  first?: never;
+}
 
 export interface BannedEventEventData {
   broadcaster_id: string;
@@ -397,10 +309,12 @@ export interface BannedEventData {
   event_data: BannedEventEventData;
 }
 
-export type ModeratorQuery = AfterPaginationQuery & {
+export interface ModeratorQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-};
+  before?: never;
+  first?: never;
+}
 
 export interface ModeratorData {
   user_id: string;
@@ -427,34 +341,26 @@ export interface ModeratorEventData {
   event_data: ModeratorEventEventData;
 }
 
-export interface SearchQuery {
+export interface SearchQuery extends PaginationQuery {
   query: string;
+  before?: never;
 }
 
-export type CategorySearchQuery = SearchQuery & FirstAfterPaginationQuery;
+export interface ChannelSearchQuery extends SearchQuery {
+  live_only?: boolean;
+}
 
-export type ChannelSearchQuery = SearchQuery &
-  FirstAfterPaginationQuery & {
-    live_only?: boolean;
-  };
-
-export interface OffChannelSearchData {
+export interface ChannelSearchData extends DateRange {
   broadcaster_language: string;
   display_name: string;
   game_id: string;
   id: string;
   is_live: boolean;
-  tags_ids: string[];
   thumbnail_url: string;
   title: string;
-  started_at: string;
+  tags_ids?: string[];
+  ended_at?: never;
 }
-export type LiveChannelSearchData = OffChannelSearchData & {
-  tags_ids: string[];
-  started_at: string;
-};
-
-export type ChannelSearchData = LiveChannelSearchData | OffChannelSearchData;
 
 export interface StreamKeyQuery {
   broadcaster_id: string;
@@ -464,12 +370,12 @@ export interface StreamKeyData {
   stream_key: string;
 }
 
-export type StreamQuery = PaginationQuery & {
+export interface StreamQuery extends PaginationQuery {
   game_id?: repeatable;
   language?: repeatable;
   user_id?: repeatable;
   user_login?: repeatable;
-};
+}
 
 export interface StreamData {
   id: string;
@@ -490,25 +396,23 @@ export interface OverwatchHero {
   ability: string;
 }
 
-export interface OverwatchMetadata {
-  broadcaster: {
-    hero?: OverwatchHero;
-  };
-}
-
 export interface HearthstoneHero {
   type: string;
   class: string;
   name: string;
 }
 
+export interface HeroMetadata<T> {
+  hero?: T;
+}
+
+export interface OverwatchMetadata {
+  broadcaster: HeroMetadata<OverwatchHero>;
+}
+
 export interface HearthstoneMetadata {
-  broadcaster: {
-    hero?: HearthstoneHero;
-  };
-  opponent: {
-    hero?: HearthstoneHero;
-  };
+  broadcaster: HeroMetadata<HearthstoneHero>;
+  opponent: HeroMetadata<HearthstoneHero>;
 }
 
 export interface StreamMetadata {
@@ -525,21 +429,16 @@ export interface CreateStreamMarkerBody {
 }
 
 export interface CreateStreamMarkerData {
-  id: integer;
+  id: string;
   created_at: string;
   description: string;
   position_seconds: integer;
 }
 
-export type UserStreamMarkerQuery = PaginationQuery & {
-  user_id: string;
-};
-
-export type VideoStreamMarkerQuery = PaginationQuery & {
-  video_id: string;
-};
-
-export type StreamMarkerQuery = UserStreamMarkerQuery | VideoStreamMarkerQuery;
+export interface StreamMarkerQuery extends PaginationQuery {
+  user_id?: string;
+  video_id?: string;
+}
 
 export interface StreamMarker {
   id: string;
@@ -597,9 +496,10 @@ export interface BroadcasterSubscriptionData {
   user_name: string;
 }
 
-export type AllStreamTagsQuery = FirstAfterPaginationQuery & {
+export interface AllStreamTagsQuery extends PaginationQuery {
   tag_id?: repeatable;
-};
+  before?: never;
+}
 
 export interface StreamTagData {
   tag_id: string;
@@ -616,16 +516,16 @@ export interface ReplaceStreamTagBody {
   tag_ids: string[];
 }
 
-export interface CreateUserFollowsBody {
+export interface CreateUserFollowBody {
   from_id: string;
   to_id: string;
 }
 
-export interface CreateUserFollowsQuery {
+export interface CreateUserFollowQuery {
   allow_notifications?: boolean;
 }
 
-export interface DeleteUserFollowsQuery {
+export interface DeleteUserFollowQuery {
   from_id: string;
   to_id: string;
 }
@@ -648,21 +548,11 @@ export interface UserData {
   email: string;
 }
 
-export type UserFollowsFromQuery = FirstAfterPaginationQuery & {
-  from_id: string;
-};
-
-export type UserFollowsToQuery = FirstAfterPaginationQuery & {
-  to_id: string;
-};
-
-export type UserFollowsFromAndToQuery = UserFollowsFromQuery &
-  UserFollowsToQuery;
-
-export type UserFollowsQuery =
-  | UserFollowsFromQuery
-  | UserFollowsToQuery
-  | UserFollowsFromAndToQuery;
+export interface UserFollowsQuery {
+  from_id?: string;
+  to_id?: string;
+  before?: never;
+}
 
 export interface UserFollowData {
   from_id: string;
@@ -675,8 +565,6 @@ export interface UserFollowData {
 export interface UpdateUserQuery {
   description?: string;
 }
-
-export type ExtensionType = "component" | "mobile" | "panel" | "overlay";
 
 export interface ExtensionData {
   id: string;
@@ -711,28 +599,19 @@ export interface UserExtensionData {
   };
 }
 
-export type UpdateUserExtensionBody = Data<UserExtensionData>;
-
-export interface IdVideoQuery {
-  id: repeatable;
+export interface UpdateUserExtensionBody {
+  data: UserExtensionData;
 }
 
-export type OptionalVideoQuery = PaginationQuery & {
+export interface VideoQuery extends PaginationQuery {
+  id?: repeatable;
+  user_id?: string;
+  game_id?: string;
   language?: string;
   period?: Period;
   sort?: VideoSort;
   type?: VideoTypeQuery;
-};
-
-export type UserVideoQuery = OptionalVideoQuery & {
-  user_id: string;
-};
-
-export type GameVideoQuery = OptionalVideoQuery & {
-  game_id: string;
-};
-
-export type VideoQuery = IdVideoQuery | UserVideoQuery | GameVideoQuery;
+}
 
 export interface VideoData {
   id: string;
@@ -751,7 +630,9 @@ export interface VideoData {
   duration: string;
 }
 
-export type WebhookSubscriptionQuery = FirstAfterPaginationQuery;
+export interface WebhookSubscriptionQuery extends PaginationQuery {
+  before?: never;
+}
 
 export interface WebhookSubscriptionData {
   topic: string;
@@ -759,11 +640,13 @@ export interface WebhookSubscriptionData {
   expires_at: string;
 }
 
-export type HypeTrainEventsQuery = FirstPaginationQuery & {
+export interface HypeTrainEventsQuery extends PaginationQuery {
   broadcaster_id: string;
   id?: string;
   cursor?: string;
-};
+  before?: never;
+  after?: never;
+}
 
 export interface HypeTrainEventContribution {
   total: integer;
