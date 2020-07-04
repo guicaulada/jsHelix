@@ -115,7 +115,7 @@ describe("index", () => {
     }
   });
 
-  it("Calls getBitsLeaderboard with clientId and token", async () => {
+  it("Calls getExtensionsTransactions with clientId and token", async () => {
     const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
     try {
       const result = await hapi.getExtensionsTransactions({
@@ -141,6 +141,31 @@ describe("index", () => {
     } catch (result) {
       expect(result.error).toBeDefined();
       expect(result.message).toEqual("must provide valid app access token");
+    }
+  });
+
+  it("Calls createClip with clientId and token", async () => {
+    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    try {
+      const result = await hapi.createClip({
+        broadcaster_id: HELIX_USER.id,
+      });
+      expect(result.headers["ratelimit-limit"]).toBeDefined();
+      expect(result.headers["ratelimit-remaining"]).toBeDefined();
+      expect(result.headers["ratelimit-reset"]).toBeDefined();
+      expect(result.data).toBeDefined();
+      result.data.forEach((clip) => {
+        expect(clip.id).toBeDefined();
+        expect(clip.edit_url).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.headers["ratelimit-limit"]).toBeDefined();
+      expect(result.headers["ratelimit-remaining"]).toBeDefined();
+      expect(result.headers["ratelimit-reset"]).toBeDefined();
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual(
+        "Clipping is not possible for an offline channel.",
+      );
     }
   });
 });
