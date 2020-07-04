@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import jsHelix from "../index";
 import { UserData } from "../types/helix";
 
