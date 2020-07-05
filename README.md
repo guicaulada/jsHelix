@@ -1,6 +1,6 @@
 # jsHelix
 
-[![Coverage Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=coverage)](https://sonarcloud.io/dashboard?branch=develop&id=jsHelix) [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status)](https://sonarcloud.io/dashboard?branch=develop&id=jsHelix)
+[![Pipeline Status](https://github.com/Sighmir/jsHelix/workflows/CI/CD/badge.svg?branch=develop)](https://github.com/Sighmir/jsHelix/actions?query=workflow%3ACI%2FCD+branch%3Adevelop) [![Coverage Status](https://codecov.io/gh/Sighmir/jsHelix/branch/develop/graph/badge.svg)](https://codecov.io/gh/Sighmir/jsHelix/branch/develop) [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status)](https://sonarcloud.io/dashboard?branch=develop&id=jsHelix)
 
 **jsHelix** is a Typescript wrapper to the [Twitch Helix API](https://dev.twitch.tv/docs/api/reference/).
 
@@ -32,15 +32,15 @@ const hapi = jsHelix(HELIX_CLIENT!, HELIX_TOKEN);
 
 hapi
   .getUsers({ login: "Sighmir" })
-  .then(users => {
+  .then((users) => {
     hapi
       .getUsersFollows({ from_id: users.data[0].id })
-      .then(data => {
+      .then((data) => {
         console.log(data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 ```
 
 Refer to the [Helix API Documentation](https://dev.twitch.tv/docs/api/reference/) and the [jsHelix Example](https://github.com/Sighmir/jsHelix/tree/master/example) for more information.
