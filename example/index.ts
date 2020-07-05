@@ -9,7 +9,7 @@ hapi
   .getUsers({ login: "Sighmir" })
   .then((users) => {
     hapi
-      .getUsersFollows({ from_id: users.data[0].id })
+      .getUserFollows({ from_id: users.data[0].id })
       .then((data) => {
         console.log(data);
       })
