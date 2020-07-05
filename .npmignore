@@ -1,4 +1,5 @@
 *
 !dist
+!dist/*
 !LICENSE
 !README.md
