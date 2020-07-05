@@ -2,12 +2,12 @@
 
 [npm-url]: https://npmjs.org/package/jshelix
 [npm-image]: https://img.shields.io/npm/v/jshelix.svg
-[pipeline-image]: https://github.com/Sighmir/jsHelix/workflows/CI/CD/badge.svg?branch=develop
-[pipeline-url]: https://github.com/Sighmir/jsHelix/actions?query=workflow%3ACI%2FCD+branch%3Adevelop
-[coverage-image]: https://codecov.io/gh/Sighmir/jsHelix/branch/develop/graph/badge.svg
-[coverage-url]: https://codecov.io/gh/Sighmir/jsHelix/branch/develop
-[quality-image]: https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status
-[quality-url]: https://sonarcloud.io/dashboard?branch=develop&id=jsHelix
+[pipeline-image]: https://github.com/Sighmir/jsHelix/workflows/CI/CD/badge.svg
+[pipeline-url]: https://github.com/Sighmir/jsHelix/actions?query=workflow%3ACI%2FCD
+[coverage-image]: https://codecov.io/gh/Sighmir/jsHelix/graph/badge.svg
+[coverage-url]: https://codecov.io/gh/Sighmir/jsHelix
+[quality-image]: https://sonarcloud.io/api/project_badges/measure?project=jsHelix&metric=alert_status
+[quality-url]: https://sonarcloud.io/dashboard?id=jsHelix
 [depstat-url]: https://david-dm.org/Sighmir/jsHelix
 [depstat-image]: https://david-dm.org/Sighmir/jsHelix/status.svg
 [devdepstat-url]: https://david-dm.org/Sighmir/jsHelix?type=dev
