@@ -23,6 +23,7 @@ jobs:
     env:
       HELIX_CLIENT: ${{ secrets.HELIX_CLIENT }}
       HELIX_TOKEN: ${{ secrets.HELIX_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   quality:
     needs: test
