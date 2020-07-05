@@ -1,6 +1,24 @@
 # jsHelix
 
-[![Pipeline Status](https://github.com/Sighmir/jsHelix/workflows/CI/CD/badge.svg?branch=develop)](https://github.com/Sighmir/jsHelix/actions?query=workflow%3ACI%2FCD+branch%3Adevelop) [![Coverage Status](https://codecov.io/gh/Sighmir/jsHelix/branch/develop/graph/badge.svg)](https://codecov.io/gh/Sighmir/jsHelix/branch/develop) [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status)](https://sonarcloud.io/dashboard?branch=develop&id=jsHelix)
+[npm-url]: https://npmjs.org/package/jshelix
+[npm-image]: https://img.shields.io/npm/v/jshelix.svg
+[pipeline-image]: https://github.com/Sighmir/jsHelix/workflows/CI/CD/badge.svg?branch=develop
+[pipeline-url]: https://github.com/Sighmir/jsHelix/actions?query=workflow%3ACI%2FCD+branch%3Adevelop
+[coverage-image]: https://codecov.io/gh/Sighmir/jsHelix/branch/develop/graph/badge.svg
+[coverage-url]: https://codecov.io/gh/Sighmir/jsHelix/branch/develop
+[quality-image]: https://sonarcloud.io/api/project_badges/measure?branch=develop&project=jsHelix&metric=alert_status
+[quality-url]: https://sonarcloud.io/dashboard?branch=develop&id=jsHelix
+[depstat-url]: https://david-dm.org/Sighmir/jsHelix
+[depstat-image]: https://david-dm.org/Sighmir/jsHelix/status.svg
+[devdepstat-url]: https://david-dm.org/Sighmir/jsHelix?type=dev
+[devdepstat-image]: https://david-dm.org/Sighmir/jsHelix/dev-status.svg
+
+[![NPM version][npm-image]][npm-url]
+[![Pipeline Status][pipeline-image]][pipeline-url]
+[![Coverage Status][coverage-image]][coverage-url]
+[![Sonarcloud Status][quality-image]][quality-url]
+[![Dependency Status][depstat-image]][depstat-url]
+[![Dev Dependency Status][devdepstat-image]][devdepstat-url]
 
 **jsHelix** is a Typescript wrapper to the [Twitch Helix API](https://dev.twitch.tv/docs/api/reference/).
 
