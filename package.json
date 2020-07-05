@@ -24,6 +24,7 @@
     "test": "jest --coverage",
     "test:dev": "jest --coverage --watchAll",
     "test:staged": "jest --changedSince=HEAD --passWithNoTests",
+    "test:codecov": "yarn test && ./node_modules/.bin/codecov",
     "test:clean": "rm -rf ./coverage",
     "prettier:check": "prettier --list-different 'src/**/*.{ts,tsx}'",
     "prettier:write": "prettier --write 'src/**/*.{ts,tsx}'",
@@ -66,15 +67,10 @@
     }
   },
   "lint-staged": {
-    "*.{ts,js}": [
-      "prettier --write",
-      "yarn lint --fix"
-    ]
+    "*.{ts,js}": ["prettier --write", "yarn lint --fix"]
   },
   "jest-junit": {
     "outputDirectory": "coverage"
   },
-  "keywords": [
-    "helix"
-  ]
+  "keywords": ["helix"]
 }
