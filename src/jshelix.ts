@@ -217,7 +217,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   }
 
   function getBannedEvents(
-    query: helix.BannedEventQuery,
+    query: helix.EventQuery,
     options: Options = {},
   ): Promise<helix.Response<helix.BannedEventData[]>> {
     return execute<helix.Response<helix.BannedEventData[]>>({
@@ -241,10 +241,10 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   }
 
   function getModeratorEvents(
-    query: helix.ModeratorEventQuery,
+    query: helix.EventQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ModeratorEventData[]>> {
-    return execute<helix.Response<helix.ModeratorEventData[]>>({
+  ): Promise<helix.Response<helix.Event[]>> {
+    return execute<helix.Response<helix.Event[]>>({
       options,
       method: "GET",
       path: "/helix/moderation/moderators/events",
@@ -303,7 +303,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   }
 
   function getStreamsMetadata(
-    query: helix.StreamQuery,
+    query?: helix.StreamQuery,
     options: Options = {},
   ): Promise<helix.Response<helix.StreamMetadata[]>> {
     return execute<helix.Response<helix.StreamMetadata[]>>({
@@ -378,7 +378,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
 
   // Tags
   function getAllStreamTags(
-    query: helix.AllStreamTagsQuery,
+    query?: helix.AllStreamTagsQuery,
     options: Options = {},
   ): Promise<helix.Response<helix.StreamTagData[]>> {
     return execute<helix.Response<helix.StreamTagData[]>>({
@@ -416,7 +416,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   }
 
   // Users
-  function createUserFollows(
+  function createUserFollow(
     body: helix.CreateUserFollowBody,
     query?: helix.CreateUserFollowQuery,
     options: Options = {},
@@ -430,9 +430,9 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     });
   }
 
-  function deleteUserFollows(
+  function deleteUserFollow(
     query: helix.DeleteUserFollowQuery,
-    options: Options,
+    options: Options = {},
   ): Promise<RequestResponse> {
     return execute<RequestResponse>({
       options,
@@ -454,7 +454,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     });
   }
 
-  function getUsersFollows(
+  function getUserFollows(
     query: helix.UserFollowsQuery,
     options: Options = {},
   ): Promise<helix.Response<helix.UserFollowData[]>> {
@@ -526,7 +526,7 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   }
 
   function getWebhookSubscriptions(
-    query?: helix.WebhookSubscriptionQuery,
+    query?: helix.PaginationQuery,
     options: Options = {},
   ): Promise<helix.Response<helix.WebhookSubscriptionData[]>> {
     return execute<helix.Response<helix.WebhookSubscriptionData[]>>({
@@ -540,8 +540,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getHypeTrainEvents(
     query: helix.HypeTrainEventsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.HypeTrainEventData[]>> {
-    return execute<helix.Response<helix.HypeTrainEventData[]>>({
+  ): Promise<helix.Response<helix.HypeTrainEvent[]>> {
+    return execute<helix.Response<helix.HypeTrainEvent[]>>({
       options,
       method: "GET",
       path: "/helix/hypetrain/events",
@@ -609,10 +609,10 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     replaceStreamTags,
 
     // Users
-    createUserFollows,
-    deleteUserFollows,
+    createUserFollow,
+    deleteUserFollow,
     getUsers,
-    getUsersFollows,
+    getUserFollows,
     updateUser,
     getUserExtensions,
     getUserActiveExtensions,

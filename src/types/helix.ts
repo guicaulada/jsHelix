@@ -57,8 +57,10 @@ export enum SubscriptionTier {
   "Tier 3" = "3000",
 }
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
 export interface PaginationCursor {
-  cursor: string;
+  cursor?: string;
 }
 
 export interface DateRange {
@@ -92,7 +94,6 @@ export interface StartCommercialData {
 
 export interface AnalyticsQuery extends PaginationQuery, DateRange {
   type?: AnalyticsType;
-  before?: never;
 }
 
 export interface AnalyticsData {
@@ -153,7 +154,6 @@ export interface BitsLeaderboardQuery extends DateRange {
   count?: integer;
   period?: Period;
   user_id?: string;
-  ended_at?: never;
 }
 
 export interface BitsLeaderboardData {
@@ -166,7 +166,6 @@ export interface BitsLeaderboardData {
 export interface ExtensionTransactionQuery extends PaginationQuery {
   extension_id: string;
   id?: repeatable;
-  before?: never;
 }
 
 export interface ExtensionTransactionCostData {
@@ -238,7 +237,7 @@ export interface EntitlementGrantsData {
 
 export interface CodeQuery {
   code: repeatable;
-  user_id: integer;
+  user_id: string;
 }
 
 export interface CodeData {
@@ -279,7 +278,6 @@ export interface AutoModData {
 export interface BannedUserQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-  first?: never;
 }
 
 export interface BannedUserData {
@@ -288,32 +286,36 @@ export interface BannedUserData {
   expires_at: string;
 }
 
-export interface BannedEventQuery extends PaginationQuery {
+export interface EventQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-  first?: never;
 }
 
-export interface BannedEventEventData {
+export interface EventData {
   broadcaster_id: string;
   broadcaster_name: string;
   user_id: string;
   user_name: string;
-  expires_at: string;
 }
-export interface BannedEventData {
+
+export interface Event {
   id: string;
   event_type: string;
   event_timestamp: string;
   version: string;
-  event_data: BannedEventEventData;
+  event_data: EventData;
+}
+
+export interface BanEventData extends EventData {
+  expires_at: string;
+}
+export interface BannedEventData extends Event {
+  event_data: BanEventData;
 }
 
 export interface ModeratorQuery extends PaginationQuery {
   broadcaster_id: string;
   user_id?: repeatable;
-  before?: never;
-  first?: never;
 }
 
 export interface ModeratorData {
@@ -321,36 +323,15 @@ export interface ModeratorData {
   user_name: string;
 }
 
-export interface ModeratorEventQuery {
-  broadcaster_id: string;
-  user_id?: repeatable;
-}
-
-export interface ModeratorEventEventData {
-  broadcaster_id: string;
-  broadcaster_name: string;
-  user_id: string;
-  user_name: string;
-}
-
-export interface ModeratorEventData {
-  id: string;
-  event_type: string;
-  event_timestamp: string;
-  version: string;
-  event_data: ModeratorEventEventData;
-}
-
 export interface SearchQuery extends PaginationQuery {
   query: string;
-  before?: never;
 }
 
 export interface ChannelSearchQuery extends SearchQuery {
   live_only?: boolean;
 }
 
-export interface ChannelSearchData extends DateRange {
+export interface ChannelSearchData {
   broadcaster_language: string;
   display_name: string;
   game_id: string;
@@ -359,7 +340,7 @@ export interface ChannelSearchData extends DateRange {
   thumbnail_url: string;
   title: string;
   tags_ids?: string[];
-  ended_at?: never;
+  started_at?: string;
 }
 
 export interface StreamKeyQuery {
@@ -464,12 +445,13 @@ export interface ChannelInformationQuery {
 }
 
 export interface ChannelInformationData {
-  status: string;
+  game_name: string;
   broadcaster_id: string;
   game_id: string;
   broadcaster_language: string;
   title: string;
-  description: string;
+  description?: string;
+  status?: string;
 }
 
 export interface ModifyChannelInformationQuery {
@@ -498,7 +480,6 @@ export interface BroadcasterSubscriptionData {
 
 export interface AllStreamTagsQuery extends PaginationQuery {
   tag_id?: repeatable;
-  before?: never;
 }
 
 export interface StreamTagData {
@@ -551,7 +532,6 @@ export interface UserData {
 export interface UserFollowsQuery {
   from_id?: string;
   to_id?: string;
-  before?: never;
 }
 
 export interface UserFollowData {
@@ -579,7 +559,7 @@ export interface UserActiveExtensionQuery {
 }
 
 export interface DetailedExtensionData {
-  active?: boolean;
+  active: boolean;
   id?: string;
   version?: string;
   name?: string;
@@ -588,15 +568,9 @@ export interface DetailedExtensionData {
 }
 
 export interface UserExtensionData {
-  panel: {
-    [key: string]: DetailedExtensionData;
-  };
-  overlay: {
-    [key: string]: DetailedExtensionData;
-  };
-  component: {
-    [key: string]: DetailedExtensionData;
-  };
+  panel: map<DetailedExtensionData>;
+  overlay: map<DetailedExtensionData>;
+  component: map<DetailedExtensionData>;
 }
 
 export interface UpdateUserExtensionBody {
@@ -630,10 +604,6 @@ export interface VideoData {
   duration: string;
 }
 
-export interface WebhookSubscriptionQuery extends PaginationQuery {
-  before?: never;
-}
-
 export interface WebhookSubscriptionData {
   topic: string;
   callback: string;
@@ -644,8 +614,6 @@ export interface HypeTrainEventsQuery extends PaginationQuery {
   broadcaster_id: string;
   id?: string;
   cursor?: string;
-  before?: never;
-  after?: never;
 }
 
 export interface HypeTrainEventContribution {
@@ -654,7 +622,7 @@ export interface HypeTrainEventContribution {
   user: string;
 }
 
-export interface HypeTrainEventEventData {
+export interface HypeTrainEventData {
   broadcaster_id: string;
   cooldown_end_time: string;
   expires_at: string;
@@ -667,10 +635,6 @@ export interface HypeTrainEventEventData {
   total: integer;
 }
 
-export interface HypeTrainEventData {
-  id: string;
-  event_type: string;
-  event_timestamp: string;
-  version: string;
-  event_data: HypeTrainEventEventData;
+export interface HypeTrainEvent extends Omit<Event, "event_data"> {
+  event_data: HypeTrainEventData;
 }

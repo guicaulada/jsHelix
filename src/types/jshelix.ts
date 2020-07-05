@@ -93,7 +93,7 @@ export interface JSHelix {
     options?: Options,
   ) => Promise<helix.Response<helix.BannedUserData[]>>;
   getBannedEvents: (
-    query: helix.BannedEventQuery,
+    query: helix.EventQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.BannedEventData[]>>;
   getModerators: (
@@ -101,9 +101,9 @@ export interface JSHelix {
     options?: Options,
   ) => Promise<helix.Response<helix.ModeratorData[]>>;
   getModeratorEvents: (
-    query: helix.ModeratorEventQuery,
+    query: helix.EventQuery,
     options?: Options,
-  ) => Promise<helix.Response<helix.ModeratorEventData[]>>;
+  ) => Promise<helix.Response<helix.Event[]>>;
 
   // Search
   searchCategories: (
@@ -112,7 +112,7 @@ export interface JSHelix {
   ) => Promise<helix.Response<helix.GameData[]>>;
   searchChannels: (
     query: helix.ChannelSearchQuery,
-    options: Options,
+    options?: Options,
   ) => Promise<helix.Response<helix.ChannelSearchData[]>>;
 
   // Streams
@@ -125,7 +125,7 @@ export interface JSHelix {
     options?: Options,
   ) => Promise<helix.Response<helix.StreamData[]>>;
   getStreamsMetadata: (
-    query: helix.StreamQuery,
+    query?: helix.StreamQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.StreamMetadata[]>>;
   createStreamMarker: (
@@ -155,7 +155,7 @@ export interface JSHelix {
 
   // Tags
   getAllStreamTags: (
-    query: helix.AllStreamTagsQuery,
+    query?: helix.AllStreamTagsQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.StreamTagData[]>>;
   getStreamTags: (
@@ -169,20 +169,20 @@ export interface JSHelix {
   ) => Promise<RequestResponse>;
 
   // Users
-  createUserFollows: (
+  createUserFollow: (
     body: helix.CreateUserFollowBody,
     query?: helix.CreateUserFollowQuery,
     options?: Options,
   ) => Promise<RequestResponse>;
-  deleteUserFollows: (
+  deleteUserFollow: (
     query: helix.DeleteUserFollowQuery,
-    options: Options,
+    options?: Options,
   ) => Promise<RequestResponse>;
   getUsers: (
     query?: helix.UserQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.UserData[]>>;
-  getUsersFollows: (
+  getUserFollows: (
     query: helix.UserFollowsQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.UserFollowData[]>>;
@@ -208,7 +208,7 @@ export interface JSHelix {
     options?: Options,
   ) => Promise<helix.Response<helix.VideoData[]>>;
   getWebhookSubscriptions: (
-    query?: helix.WebhookSubscriptionQuery,
+    query?: helix.PaginationQuery,
     options?: Options,
   ) => Promise<helix.Response<helix.WebhookSubscriptionData[]>>;
 
@@ -216,5 +216,5 @@ export interface JSHelix {
   getHypeTrainEvents: (
     query: helix.HypeTrainEventsQuery,
     options?: Options,
-  ) => Promise<helix.Response<helix.HypeTrainEventData[]>>;
+  ) => Promise<helix.Response<helix.HypeTrainEvent[]>>;
 }
