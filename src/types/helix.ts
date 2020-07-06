@@ -122,26 +122,26 @@ export interface CheermotesQuery {
   broadcaster_id?: string;
 }
 
-export interface CheermotesImagesImages {
+export interface CheermoteImagesByState {
   animated: map<string>;
   static: map<string>;
 }
 
-export interface CheermotesImages {
-  dark: CheermotesImagesImages;
-  light: CheermotesImagesImages;
+export interface CheermoteImages {
+  dark: CheermoteImagesByState;
+  light: CheermoteImagesByState;
 }
 
 export interface CheermoteTier {
   min_bits: integer;
   id: CheermoteTierId;
   color: string;
-  images: CheermotesImages;
+  images: CheermoteImages;
   can_cheer: boolean;
   show_in_bits_card: boolean;
 }
 
-export interface CheermotesData {
+export interface CheermoteData {
   prefix: string;
   tiers: CheermoteTier[];
   type: CheermoteType;

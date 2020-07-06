@@ -38,7 +38,7 @@ export interface JSHelix {
   getCheermotes: (
     query?: helix.CheermotesQuery,
     options?: Options,
-  ) => Promise<helix.Response<helix.CheermotesData[]>>;
+  ) => Promise<helix.Response<helix.CheermoteData[]>>;
   getBitsLeaderboard: (
     query?: helix.BitsLeaderboardQuery,
     options?: Options,

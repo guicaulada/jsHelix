@@ -69,8 +69,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getCheermotes(
     query?: helix.CheermotesQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.CheermotesData[]>> {
-    return execute<helix.Response<helix.CheermotesData[]>>({
+  ): Promise<helix.Response<helix.CheermoteData[]>> {
+    return execute<helix.Response<helix.CheermoteData[]>>({
       options,
       method: "GET",
       path: "/helix/bits/cheermotes",
