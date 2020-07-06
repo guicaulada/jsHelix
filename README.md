@@ -71,7 +71,7 @@ You can also load this script on your browser like so:
 <script src="https://cdn.jsdelivr.net/npm/jshelix/dist/bundle.js"></script>
 ```
 
-You can now use the class HelixAPI normally on the page, like you would on Node.js.
+You can now use the jsHelix normally on the page, like you would on Node.js.
 
 ## License
 
