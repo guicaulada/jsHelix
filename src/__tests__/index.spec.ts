@@ -6,15 +6,15 @@ import {
   UserData,
 } from "../types/helix";
 
-const HELIX_CLIENT = process.env.HELIX_CLIENT || "";
-const HELIX_TOKEN = process.env.HELIX_TOKEN || "";
+const TWITCH_CLIENT = process.env.TWITCH_CLIENT || "";
+const TWITCH_TOKEN = process.env.TWITCH_TOKEN || "";
 
-let HELIX_USER: UserData;
+let TWITCH_USER: UserData;
 
 describe("index", () => {
   beforeAll(async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
-    HELIX_USER = (await hapi.getUsers()).data[0];
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    TWITCH_USER = (await hapi.getUsers()).data[0];
   });
 
   it("Calls jsHelix with clientId and token", () => {
@@ -37,10 +37,10 @@ describe("index", () => {
   });
 
   it("Calls startCommercial with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.startCommercial({
-        broadcaster_id: HELIX_USER.id,
+        broadcaster_id: TWITCH_USER.id,
         length: 30,
       });
       expect(result.data).toBeDefined();
@@ -52,13 +52,13 @@ describe("index", () => {
     } catch (result) {
       expect(result.error).toBeDefined();
       expect(result.message).toEqual(
-        `the channel '${HELIX_USER.login}' is not currently live and needs to be in order to start commercials.`,
+        `the channel '${TWITCH_USER.login}' is not currently live and needs to be in order to start commercials.`,
       );
     }
   });
 
   it("Calls getExtensionAnalytics with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getExtensionAnalytics();
       expect(result.data).toBeDefined();
@@ -75,7 +75,7 @@ describe("index", () => {
   });
 
   it("Calls getCheermotes with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getCheermotes();
     expect(result.data).toBeDefined();
     result.data.forEach((cheermote) => {
@@ -89,7 +89,7 @@ describe("index", () => {
   });
 
   it("Calls getBitsLeaderboard with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getBitsLeaderboard();
     expect(result.data).toBeDefined();
     expect(result.date_range).toBeDefined();
@@ -103,7 +103,7 @@ describe("index", () => {
   });
 
   it("Calls getGameAnalytics with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getGameAnalytics();
       expect(result.data).toBeDefined();
@@ -120,7 +120,7 @@ describe("index", () => {
   });
 
   it("Calls getExtensionsTransactions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getExtensionsTransactions({
         extension_id: "extension_id",
@@ -149,10 +149,10 @@ describe("index", () => {
   });
 
   it("Calls createClip with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.createClip({
-        broadcaster_id: HELIX_USER.id,
+        broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
       result.data.forEach((clip) => {
@@ -168,9 +168,9 @@ describe("index", () => {
   });
 
   it("Calls getClips with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getClips({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((clip) => {
@@ -193,7 +193,7 @@ describe("index", () => {
   });
 
   it("Calls createEntitlementGrantsUploadURL with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.createEntitlementGrantsUploadURL({
         manifest_id: "manifest_id",
@@ -210,10 +210,10 @@ describe("index", () => {
   });
 
   it("Calls getCodeStatus with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getCodeStatus({
-        user_id: HELIX_USER.id,
+        user_id: TWITCH_USER.id,
         code: "code",
       });
       expect(result.data).toBeDefined();
@@ -228,10 +228,10 @@ describe("index", () => {
   });
 
   it("Calls redeemCode with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.redeemCode({
-        user_id: HELIX_USER.id,
+        user_id: TWITCH_USER.id,
         code: "code",
       });
       expect(result.data).toBeDefined();
@@ -246,7 +246,7 @@ describe("index", () => {
   });
 
   it("Calls getTopGames with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getTopGames();
     expect(result.data).toBeDefined();
     result.data.forEach((game) => {
@@ -257,7 +257,7 @@ describe("index", () => {
   });
 
   it("Calls getGames with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getGames({ name: ["Fortnite", "Call of Duty"] });
     expect(result.data).toBeDefined();
     result.data.forEach((game) => {
@@ -268,11 +268,11 @@ describe("index", () => {
   });
 
   it("Calls checkAutoModStatus with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.checkAutoModStatus(
         {
-          broadcaster_id: HELIX_USER.id,
+          broadcaster_id: TWITCH_USER.id,
         },
         {
           data: [
@@ -296,9 +296,9 @@ describe("index", () => {
   });
 
   it("Calls getBannedUsers with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getBannedUsers({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((ban) => {
@@ -309,9 +309,9 @@ describe("index", () => {
   });
 
   it("Calls getBannedEvents with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getBannedEvents({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((ban) => {
@@ -329,9 +329,9 @@ describe("index", () => {
   });
 
   it("Calls getModerators with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getModerators({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((mod) => {
@@ -341,9 +341,9 @@ describe("index", () => {
   });
 
   it("Calls getModeratorEvents with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getModeratorEvents({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((mod) => {
@@ -360,7 +360,7 @@ describe("index", () => {
   });
 
   it("Calls searchCategories with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.searchCategories({
       query: encodeURIComponent("Arts"),
     });
@@ -373,9 +373,9 @@ describe("index", () => {
   });
 
   it("Calls searchChannels with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.searchChannels({
-      query: encodeURIComponent(HELIX_USER.display_name),
+      query: encodeURIComponent(TWITCH_USER.display_name),
     });
     expect(result.data).toBeDefined();
     result.data.forEach((channel) => {
@@ -394,10 +394,10 @@ describe("index", () => {
   });
 
   it("Calls getStreamKey with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getStreamKey({
-        broadcaster_id: HELIX_USER.id,
+        broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
       result.data.forEach((key) => {
@@ -410,7 +410,7 @@ describe("index", () => {
   });
 
   it("Calls getStreams with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getStreams();
     expect(result.data).toBeDefined();
     result.data.forEach((stream) => {
@@ -428,7 +428,7 @@ describe("index", () => {
   });
 
   it("Calls getStreamsMetadata with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getStreamsMetadata();
     expect(result.data).toBeDefined();
     result.data.forEach((stream) => {
@@ -438,9 +438,9 @@ describe("index", () => {
   });
 
   it("Calls createStreamMarker with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
-      const result = await hapi.createStreamMarker({ user_id: HELIX_USER.id });
+      const result = await hapi.createStreamMarker({ user_id: TWITCH_USER.id });
       expect(result.data).toBeDefined();
       result.data.forEach((marker) => {
         expect(marker.created_at).toBeDefined();
@@ -457,10 +457,10 @@ describe("index", () => {
   });
 
   it("Calls getStreamMarkers with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getStreamMarkers({
-        user_id: HELIX_USER.id,
+        user_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
       result.data.forEach((stream) => {
@@ -488,9 +488,9 @@ describe("index", () => {
   });
 
   it("Calls getChannelInformation with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getChannelInformation({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((channel) => {
@@ -503,18 +503,18 @@ describe("index", () => {
   });
 
   it("Calls modifyChannelInformation with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.modifyChannelInformation({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
       broadcaster_language: "en",
     });
     expect(result.status).toEqual(204);
   });
 
   it("Calls getBroadcasterSubscriptions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getBroadcasterSubscriptions({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     const tiers = [
       SubscriptionTier["Tier 1"],
@@ -535,7 +535,7 @@ describe("index", () => {
   });
 
   it("Calls getAllStreamTags with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getAllStreamTags();
     expect(result.data).toBeDefined();
     result.data.forEach((tag) => {
@@ -547,9 +547,9 @@ describe("index", () => {
   });
 
   it("Calls getStreamTags with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getStreamTags({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((tag) => {
@@ -561,19 +561,19 @@ describe("index", () => {
   });
 
   it("Calls replaceStreamTags with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.replaceStreamTags({
-      broadcaster_id: HELIX_USER.id,
+      broadcaster_id: TWITCH_USER.id,
     });
     expect(result.status).toEqual(204);
   });
 
   it("Calls createUserFollow with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.createUserFollow({
-        from_id: HELIX_USER.id,
-        to_id: HELIX_USER.id,
+        from_id: TWITCH_USER.id,
+        to_id: TWITCH_USER.id,
       });
       expect(result.status).toEqual(204);
     } catch (result) {
@@ -583,11 +583,11 @@ describe("index", () => {
   });
 
   it("Calls deleteUserFollow with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.deleteUserFollow({
-        from_id: HELIX_USER.id,
-        to_id: HELIX_USER.id,
+        from_id: TWITCH_USER.id,
+        to_id: TWITCH_USER.id,
       });
       expect(result.status).toEqual(204);
     } catch (result) {
@@ -597,7 +597,7 @@ describe("index", () => {
   });
 
   it("Calls getUsers with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUsers();
     expect(result.data).toBeDefined();
     result.data.forEach((user) => {
@@ -615,9 +615,9 @@ describe("index", () => {
   });
 
   it("Calls getUserFollows with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUserFollows({
-      from_id: HELIX_USER.id,
+      from_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((follow) => {
@@ -630,9 +630,9 @@ describe("index", () => {
   });
 
   it("Calls updateUser with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.updateUser({
-      description: HELIX_USER.description,
+      description: TWITCH_USER.description,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((user) => {
@@ -650,7 +650,7 @@ describe("index", () => {
   });
 
   it("Calls getUserExtensions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUserExtensions();
     expect(result.data).toBeDefined();
     result.data.forEach((extension) => {
@@ -663,7 +663,7 @@ describe("index", () => {
   });
 
   it("Calls getUserActiveExtensions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUserActiveExtensions();
     expect(result.data).toBeDefined();
     expect(result.data.component).toBeDefined();
@@ -684,7 +684,7 @@ describe("index", () => {
   });
 
   it("Calls updateUserExtensions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.updateUserExtensions({
       data: {
         panel: {},
@@ -711,9 +711,9 @@ describe("index", () => {
   });
 
   it("Calls getVideos with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getVideos({
-      user_id: HELIX_USER.id,
+      user_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
     result.data.forEach((video) => {
@@ -735,7 +735,7 @@ describe("index", () => {
   });
 
   it("Calls getWebhookSubscriptions with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getWebhookSubscriptions();
       expect(result.data).toBeDefined();
@@ -751,10 +751,10 @@ describe("index", () => {
   });
 
   it("Calls getHypeTrainEvents with clientId and token", async () => {
-    const hapi = jsHelix(HELIX_CLIENT, HELIX_TOKEN);
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {
       const result = await hapi.getHypeTrainEvents({
-        broadcaster_id: HELIX_USER.id,
+        broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
       result.data.forEach((hype) => {
