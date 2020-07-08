@@ -1,15 +1,10 @@
 import jsHelix from "../index";
-import {
-  DetailedExtensionData,
-  map,
-  SubscriptionTier,
-  UserData,
-} from "../types/helix";
+import * as helix from "../types/helix";
 
 const TWITCH_CLIENT = process.env.TWITCH_CLIENT || "";
 const TWITCH_TOKEN = process.env.TWITCH_TOKEN || "";
 
-let TWITCH_USER: UserData;
+let TWITCH_USER: helix.UserData;
 
 describe("index", () => {
   beforeAll(async () => {
@@ -517,9 +512,9 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     const tiers = [
-      SubscriptionTier["Tier 1"],
-      SubscriptionTier["Tier 2"],
-      SubscriptionTier["Tier 3"],
+      helix.SubscriptionTier["Tier 1"],
+      helix.SubscriptionTier["Tier 2"],
+      helix.SubscriptionTier["Tier 3"],
     ];
     const tierMatcher = new RegExp(`(${tiers.join("|")})`);
     expect(result.data).toBeDefined();
@@ -670,7 +665,7 @@ describe("index", () => {
     expect(result.data.overlay).toBeDefined();
     expect(result.data.panel).toBeDefined();
     Object.values(result.data).forEach(
-      (extensionType: map<DetailedExtensionData>) => {
+      (extensionType: helix.map<helix.DetailedExtensionData>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
           if (extension.active) {
@@ -697,7 +692,7 @@ describe("index", () => {
     expect(result.data.overlay).toBeDefined();
     expect(result.data.panel).toBeDefined();
     Object.values(result.data).forEach(
-      (extensionType: map<DetailedExtensionData>) => {
+      (extensionType: helix.map<helix.DetailedExtensionData>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
           if (extension.active) {
