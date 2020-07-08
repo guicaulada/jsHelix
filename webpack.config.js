@@ -22,7 +22,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     library: "jsHelix",
-    libraryTarget: "window",
+    libraryTarget: "var",
     libraryExport: "default",
   },
   plugins: [
