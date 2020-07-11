@@ -4,7 +4,7 @@ import * as helix from "../types/helix";
 const TWITCH_CLIENT = process.env.TWITCH_CLIENT || "";
 const TWITCH_TOKEN = process.env.TWITCH_TOKEN || "";
 
-let TWITCH_USER: helix.UserData;
+let TWITCH_USER: helix.User;
 
 describe("index", () => {
   beforeAll(async () => {
@@ -665,7 +665,7 @@ describe("index", () => {
     expect(result.data.overlay).toBeDefined();
     expect(result.data.panel).toBeDefined();
     Object.values(result.data).forEach(
-      (extensionType: helix.map<helix.DetailedExtensionData>) => {
+      (extensionType: helix.map<helix.DetailedExtension>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
           if (extension.active) {
@@ -692,7 +692,7 @@ describe("index", () => {
     expect(result.data.overlay).toBeDefined();
     expect(result.data.panel).toBeDefined();
     Object.values(result.data).forEach(
-      (extensionType: helix.map<helix.DetailedExtensionData>) => {
+      (extensionType: helix.map<helix.DetailedExtension>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
           if (extension.active) {

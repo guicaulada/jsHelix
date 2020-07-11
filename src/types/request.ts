@@ -31,8 +31,13 @@ export interface RequestMessage {
   message: string;
 }
 
-export interface RequestResponse {
+export interface RequestData<T> {
+  data: T;
+}
+
+export interface RequestResponse<T = undefined>
+  extends RequestMessage,
+    RequestData<T> {
   headers: RequestHeaders;
   status: number;
-  message?: string;
 }

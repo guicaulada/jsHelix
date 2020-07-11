@@ -59,7 +59,7 @@ export enum SubscriptionTier {
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export interface PaginationCursor {
+export interface Pagination {
   cursor?: string;
 }
 
@@ -68,11 +68,10 @@ export interface DateRange {
   ended_at?: string;
 }
 
-export interface Response<T> extends RequestResponse {
+export interface Response<T> extends RequestResponse<T> {
   total?: integer;
-  pagination?: PaginationCursor;
+  pagination?: Pagination;
   date_range?: DateRange;
-  data: T;
 }
 
 export interface PaginationQuery {
@@ -86,7 +85,7 @@ export interface StartCommercialBody {
   length: CommercialLength;
 }
 
-export interface StartCommercialData {
+export interface Commercial {
   length: CommercialLength;
   message: string;
   retryAfter: integer;
@@ -96,7 +95,7 @@ export interface AnalyticsQuery extends PaginationQuery, DateRange {
   type?: AnalyticsType;
 }
 
-export interface AnalyticsData {
+export interface Analytics {
   URL: string;
   date_range: DateRange;
   type: AnalyticsType;
@@ -106,7 +105,7 @@ export interface ExtensionAnalyticsQuery extends AnalyticsQuery {
   extension_id?: string;
 }
 
-export interface ExtensionAnalyticsData extends AnalyticsData {
+export interface ExtensionAnalytics extends Analytics {
   extension_id: string;
 }
 
@@ -114,7 +113,7 @@ export interface GameAnalyticsQuery extends AnalyticsQuery {
   game_id?: string;
 }
 
-export interface GameAnalyticsData extends AnalyticsData {
+export interface GameAnalytics extends Analytics {
   game_id: string;
 }
 
@@ -141,7 +140,7 @@ export interface CheermoteTier {
   show_in_bits_card: boolean;
 }
 
-export interface CheermoteData {
+export interface Cheermote {
   prefix: string;
   tiers: CheermoteTier[];
   type: CheermoteType;
@@ -156,7 +155,7 @@ export interface BitsLeaderboardQuery extends DateRange {
   user_id?: string;
 }
 
-export interface BitsLeaderboardData {
+export interface BitsLeaderboard {
   user_id: string;
   user_name: string;
   rank: integer;
@@ -168,21 +167,21 @@ export interface ExtensionTransactionQuery extends PaginationQuery {
   id?: repeatable;
 }
 
-export interface ExtensionTransactionCostData {
+export interface ExtensionTransactionCost {
   amount: integer;
   type: "bits";
 }
 
-export interface ExtensionTransactionProductData {
+export interface ExtensionTransactionProduct {
   domain?: string;
   broadcast?: boolean;
   sku: string;
-  cost: ExtensionTransactionCostData;
+  cost: ExtensionTransactionCost;
   displayName: string;
   inDevelopment: boolean;
 }
 
-export interface ExtensionTransactionData {
+export interface ExtensionTransaction {
   id: string;
   timestamp: string;
   broadcaster_id: string;
@@ -190,7 +189,7 @@ export interface ExtensionTransactionData {
   user_id: string;
   user_name: string;
   product_type: "BITS_IN_EXTENSION";
-  product_data: ExtensionTransactionProductData;
+  product_data: ExtensionTransactionProduct;
 }
 
 export interface CreateClipQuery {
@@ -198,7 +197,7 @@ export interface CreateClipQuery {
   has_delay?: boolean;
 }
 
-export interface CreateClipData {
+export interface CreatedClip {
   id: string;
   edit_url: string;
 }
@@ -209,7 +208,7 @@ export interface ClipQuery extends PaginationQuery, DateRange {
   id?: repeatable;
 }
 
-export interface ClipData {
+export interface Clip {
   id: string;
   url: string;
   embed_url: string;
@@ -231,7 +230,7 @@ export interface EntitlementGrantsQuery {
   type: "bulk_drops_grant";
 }
 
-export interface EntitlementGrantsData {
+export interface EntitlementGrant {
   url: string;
 }
 
@@ -240,7 +239,7 @@ export interface CodeQuery {
   user_id: string;
 }
 
-export interface CodeData {
+export interface Code {
   code: string;
   status: CodeStatus;
 }
@@ -250,7 +249,7 @@ export interface GameQuery {
   name?: repeatable;
 }
 
-export interface GameData {
+export interface Game {
   id: string;
   name: string;
   box_art_url: string;
@@ -260,17 +259,17 @@ export interface AutoModQuery {
   broadcaster_id: string;
 }
 
-export interface AutoModBodyData {
+export interface AutoModData {
   msg_id: string;
   msg_text: string;
   user_id: string;
 }
 
 export interface AutoModBody {
-  data: AutoModBodyData[];
+  data: AutoModData[];
 }
 
-export interface AutoModData {
+export interface AutoModMessage {
   msg_id: string;
   is_permitted: boolean;
 }
@@ -280,7 +279,7 @@ export interface BannedUserQuery extends PaginationQuery {
   user_id?: repeatable;
 }
 
-export interface BannedUserData {
+export interface BannedUser {
   user_id: string;
   user_name: string;
   expires_at: string;
@@ -309,7 +308,7 @@ export interface Event {
 export interface BanEventData extends EventData {
   expires_at: string;
 }
-export interface BannedEventData extends Event {
+export interface BannedEvent extends Event {
   event_data: BanEventData;
 }
 
@@ -318,7 +317,7 @@ export interface ModeratorQuery extends PaginationQuery {
   user_id?: repeatable;
 }
 
-export interface ModeratorData {
+export interface Moderator {
   user_id: string;
   user_name: string;
 }
@@ -331,7 +330,7 @@ export interface ChannelSearchQuery extends SearchQuery {
   live_only?: boolean;
 }
 
-export interface ChannelSearchData {
+export interface Channel {
   broadcaster_language: string;
   display_name: string;
   game_id: string;
@@ -347,7 +346,7 @@ export interface StreamKeyQuery {
   broadcaster_id: string;
 }
 
-export interface StreamKeyData {
+export interface StreamKey {
   stream_key: string;
 }
 
@@ -358,7 +357,7 @@ export interface StreamQuery extends PaginationQuery {
   user_login?: repeatable;
 }
 
-export interface StreamData {
+export interface Stream {
   id: string;
   user_id: string;
   user_name: string;
@@ -396,7 +395,7 @@ export interface HearthstoneMetadata {
   opponent: HeroMetadata<HearthstoneHero>;
 }
 
-export interface StreamMetadata {
+export interface StreamMeta {
   user_id: string;
   user_name: string;
   game_id?: string;
@@ -409,7 +408,7 @@ export interface CreateStreamMarkerBody {
   description?: string;
 }
 
-export interface CreateStreamMarkerData {
+export interface CreatedStreamMarker {
   id: string;
   created_at: string;
   description: string;
@@ -434,7 +433,7 @@ export interface StreamMarkerVideo {
   markers: StreamMarker[];
 }
 
-export interface StreamMarkerData {
+export interface StreamMarker {
   user_id: string;
   user_name: string;
   videos: StreamMarkerVideo[];
@@ -444,7 +443,7 @@ export interface ChannelInformationQuery {
   broadcaster_id: string;
 }
 
-export interface ChannelInformationData {
+export interface ChannelInformation {
   game_name: string;
   broadcaster_id: string;
   game_id: string;
@@ -468,7 +467,7 @@ export interface BroadcasterSubscriptionQuery {
   user_id?: repeatable;
 }
 
-export interface BroadcasterSubscriptionData {
+export interface BroadcasterSubscription {
   broadcaster_id: string;
   broadcaster_name: string;
   is_gift: boolean;
@@ -482,7 +481,7 @@ export interface AllStreamTagsQuery extends PaginationQuery {
   tag_id?: repeatable;
 }
 
-export interface StreamTagData {
+export interface StreamTag {
   tag_id: string;
   is_auto: boolean;
   localization_names: map<string>;
@@ -516,7 +515,7 @@ export interface UserQuery {
   id?: repeatable;
 }
 
-export interface UserData {
+export interface User {
   id: string;
   login: string;
   display_name: string;
@@ -534,7 +533,7 @@ export interface UserFollowsQuery {
   to_id?: string;
 }
 
-export interface UserFollowData {
+export interface UserFollow {
   from_id: string;
   from_name: string;
   to_id: string;
@@ -546,7 +545,7 @@ export interface UpdateUserQuery {
   description?: string;
 }
 
-export interface ExtensionData {
+export interface Extension {
   id: string;
   version: string;
   name: string;
@@ -558,7 +557,7 @@ export interface UserActiveExtensionQuery {
   user_id?: string;
 }
 
-export interface DetailedExtensionData {
+export interface DetailedExtension {
   active: boolean;
   id?: string;
   version?: string;
@@ -567,14 +566,14 @@ export interface DetailedExtensionData {
   y?: integer;
 }
 
-export interface UserExtensionData {
-  panel: map<DetailedExtensionData>;
-  overlay: map<DetailedExtensionData>;
-  component: map<DetailedExtensionData>;
+export interface UserExtension {
+  panel: map<DetailedExtension>;
+  overlay: map<DetailedExtension>;
+  component: map<DetailedExtension>;
 }
 
 export interface UpdateUserExtensionBody {
-  data: UserExtensionData;
+  data: UserExtension;
 }
 
 export interface VideoQuery extends PaginationQuery {
@@ -587,7 +586,7 @@ export interface VideoQuery extends PaginationQuery {
   type?: VideoTypeQuery;
 }
 
-export interface VideoData {
+export interface Video {
   id: string;
   user_id: string;
   user_name: string;
@@ -604,7 +603,7 @@ export interface VideoData {
   duration: string;
 }
 
-export interface WebhookSubscriptionData {
+export interface WebhookSubscription {
   topic: string;
   callback: string;
   expires_at: string;

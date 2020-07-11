@@ -31,8 +31,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function startCommercial(
     body: helix.StartCommercialBody,
     options: Options = {},
-  ): Promise<helix.Response<helix.StartCommercialData[]>> {
-    return execute<helix.Response<helix.StartCommercialData[]>>({
+  ): Promise<helix.Response<helix.Commercial[]>> {
+    return execute<helix.Response<helix.Commercial[]>>({
       options,
       method: "POST",
       path: "/helix/channels/commercial",
@@ -44,8 +44,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getExtensionAnalytics(
     query?: helix.ExtensionAnalyticsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ExtensionAnalyticsData[]>> {
-    return execute<helix.Response<helix.ExtensionAnalyticsData[]>>({
+  ): Promise<helix.Response<helix.ExtensionAnalytics[]>> {
+    return execute<helix.Response<helix.ExtensionAnalytics[]>>({
       options,
       method: "GET",
       path: "/helix/analytics/extensions",
@@ -56,8 +56,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getGameAnalytics(
     query?: helix.GameAnalyticsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.GameAnalyticsData[]>> {
-    return execute<helix.Response<helix.GameAnalyticsData[]>>({
+  ): Promise<helix.Response<helix.GameAnalytics[]>> {
+    return execute<helix.Response<helix.GameAnalytics[]>>({
       options,
       method: "GET",
       path: "/helix/analytics/games",
@@ -69,8 +69,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getCheermotes(
     query?: helix.CheermotesQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.CheermoteData[]>> {
-    return execute<helix.Response<helix.CheermoteData[]>>({
+  ): Promise<helix.Response<helix.Cheermote[]>> {
+    return execute<helix.Response<helix.Cheermote[]>>({
       options,
       method: "GET",
       path: "/helix/bits/cheermotes",
@@ -81,8 +81,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getBitsLeaderboard(
     query?: helix.BitsLeaderboardQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.BitsLeaderboardData[]>> {
-    return execute<helix.Response<helix.BitsLeaderboardData[]>>({
+  ): Promise<helix.Response<helix.BitsLeaderboard[]>> {
+    return execute<helix.Response<helix.BitsLeaderboard[]>>({
       options,
       method: "GET",
       path: "/helix/bits/leaderboard",
@@ -93,8 +93,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getExtensionsTransactions(
     query: helix.ExtensionTransactionQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ExtensionTransactionData[]>> {
-    return execute<helix.Response<helix.ExtensionTransactionData[]>>({
+  ): Promise<helix.Response<helix.ExtensionTransaction[]>> {
+    return execute<helix.Response<helix.ExtensionTransaction[]>>({
       options,
       method: "GET",
       path: "/helix/extensions/transactions",
@@ -106,8 +106,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function createClip(
     query: helix.CreateClipQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.CreateClipData[]>> {
-    return execute<helix.Response<helix.CreateClipData[]>>({
+  ): Promise<helix.Response<helix.CreatedClip[]>> {
+    return execute<helix.Response<helix.CreatedClip[]>>({
       options,
       method: "POST",
       path: "/helix/clips",
@@ -118,8 +118,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getClips(
     query: helix.ClipQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ClipData[]>> {
-    return execute<helix.Response<helix.ClipData[]>>({
+  ): Promise<helix.Response<helix.Clip[]>> {
+    return execute<helix.Response<helix.Clip[]>>({
       options,
       method: "GET",
       path: "/helix/clips",
@@ -131,8 +131,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function createEntitlementGrantsUploadURL(
     query: helix.EntitlementGrantsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.EntitlementGrantsData[]>> {
-    return execute<helix.Response<helix.EntitlementGrantsData[]>>({
+  ): Promise<helix.Response<helix.EntitlementGrant[]>> {
+    return execute<helix.Response<helix.EntitlementGrant[]>>({
       options,
       method: "POST",
       path: "/helix/entitlements/upload",
@@ -143,8 +143,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getCodeStatus(
     query: helix.CodeQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.CodeData[]>> {
-    return execute<helix.Response<helix.CodeData[]>>({
+  ): Promise<helix.Response<helix.Code[]>> {
+    return execute<helix.Response<helix.Code[]>>({
       options,
       method: "GET",
       path: "/helix/entitlements/codes",
@@ -155,8 +155,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function redeemCode(
     query: helix.CodeQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.CodeData[]>> {
-    return execute<helix.Response<helix.CodeData[]>>({
+  ): Promise<helix.Response<helix.Code[]>> {
+    return execute<helix.Response<helix.Code[]>>({
       options,
       method: "POST",
       path: "/helix/entitlements/code",
@@ -168,8 +168,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getTopGames(
     query?: helix.PaginationQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.GameData[]>> {
-    return execute<helix.Response<helix.GameData[]>>({
+  ): Promise<helix.Response<helix.Game[]>> {
+    return execute<helix.Response<helix.Game[]>>({
       options,
       method: "GET",
       path: "/helix/games/top",
@@ -180,8 +180,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getGames(
     query: helix.GameQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.GameData[]>> {
-    return execute<helix.Response<helix.GameData[]>>({
+  ): Promise<helix.Response<helix.Game[]>> {
+    return execute<helix.Response<helix.Game[]>>({
       options,
       method: "GET",
       path: "/helix/games",
@@ -194,8 +194,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     query: helix.AutoModQuery,
     body: helix.AutoModBody,
     options: Options = {},
-  ): Promise<helix.Response<helix.AutoModData[]>> {
-    return execute<helix.Response<helix.AutoModData[]>>({
+  ): Promise<helix.Response<helix.AutoModMessage[]>> {
+    return execute<helix.Response<helix.AutoModMessage[]>>({
       options,
       method: "POST",
       path: "/helix/moderation/enforcements/status",
@@ -207,8 +207,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getBannedUsers(
     query: helix.BannedUserQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.BannedUserData[]>> {
-    return execute<helix.Response<helix.BannedUserData[]>>({
+  ): Promise<helix.Response<helix.BannedUser[]>> {
+    return execute<helix.Response<helix.BannedUser[]>>({
       options,
       method: "GET",
       path: "/helix/moderation/banned",
@@ -219,8 +219,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getBannedEvents(
     query: helix.EventQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.BannedEventData[]>> {
-    return execute<helix.Response<helix.BannedEventData[]>>({
+  ): Promise<helix.Response<helix.BannedEvent[]>> {
+    return execute<helix.Response<helix.BannedEvent[]>>({
       options,
       method: "GET",
       path: "/helix/moderation/banned/events",
@@ -231,8 +231,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getModerators(
     query: helix.ModeratorQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ModeratorData[]>> {
-    return execute<helix.Response<helix.ModeratorData[]>>({
+  ): Promise<helix.Response<helix.Moderator[]>> {
+    return execute<helix.Response<helix.Moderator[]>>({
       options,
       method: "GET",
       path: "/helix/moderation/moderators",
@@ -256,8 +256,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function searchCategories(
     query: helix.SearchQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.GameData[]>> {
-    return execute<helix.Response<helix.GameData[]>>({
+  ): Promise<helix.Response<helix.Game[]>> {
+    return execute<helix.Response<helix.Game[]>>({
       options,
       method: "GET",
       path: "/helix/search/categories",
@@ -268,8 +268,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function searchChannels(
     query: helix.ChannelSearchQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ChannelSearchData[]>> {
-    return execute<helix.Response<helix.ChannelSearchData[]>>({
+  ): Promise<helix.Response<helix.Channel[]>> {
+    return execute<helix.Response<helix.Channel[]>>({
       options,
       method: "GET",
       path: "/helix/search/channels",
@@ -281,8 +281,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getStreamKey(
     query: helix.StreamKeyQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamKeyData[]>> {
-    return execute<helix.Response<helix.StreamKeyData[]>>({
+  ): Promise<helix.Response<helix.StreamKey[]>> {
+    return execute<helix.Response<helix.StreamKey[]>>({
       options,
       method: "GET",
       path: "/helix/streams/key",
@@ -293,8 +293,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getStreams(
     query?: helix.StreamQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamData[]>> {
-    return execute<helix.Response<helix.StreamData[]>>({
+  ): Promise<helix.Response<helix.Stream[]>> {
+    return execute<helix.Response<helix.Stream[]>>({
       options,
       method: "GET",
       path: "/helix/streams",
@@ -305,8 +305,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getStreamsMetadata(
     query?: helix.StreamQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamMetadata[]>> {
-    return execute<helix.Response<helix.StreamMetadata[]>>({
+  ): Promise<helix.Response<helix.StreamMeta[]>> {
+    return execute<helix.Response<helix.StreamMeta[]>>({
       options,
       method: "GET",
       path: "/helix/streams/metadata",
@@ -317,8 +317,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function createStreamMarker(
     body: helix.CreateStreamMarkerBody,
     options: Options = {},
-  ): Promise<helix.Response<helix.CreateStreamMarkerData[]>> {
-    return execute<helix.Response<helix.CreateStreamMarkerData[]>>({
+  ): Promise<helix.Response<helix.CreatedStreamMarker[]>> {
+    return execute<helix.Response<helix.CreatedStreamMarker[]>>({
       options,
       method: "POST",
       path: "/helix/streams/markers",
@@ -329,8 +329,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getStreamMarkers(
     query: helix.StreamMarkerQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamMarkerData[]>> {
-    return execute<helix.Response<helix.StreamMarkerData[]>>({
+  ): Promise<helix.Response<helix.StreamMarker[]>> {
+    return execute<helix.Response<helix.StreamMarker[]>>({
       options,
       method: "GET",
       path: "/helix/streams/markers",
@@ -342,8 +342,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getChannelInformation(
     query: helix.ChannelInformationQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.ChannelInformationData[]>> {
-    return execute<helix.Response<helix.ChannelInformationData[]>>({
+  ): Promise<helix.Response<helix.ChannelInformation[]>> {
+    return execute<helix.Response<helix.ChannelInformation[]>>({
       options,
       method: "GET",
       path: "/helix/channels",
@@ -367,8 +367,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getBroadcasterSubscriptions(
     query: helix.BroadcasterSubscriptionQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.BroadcasterSubscriptionData[]>> {
-    return execute<helix.Response<helix.BroadcasterSubscriptionData[]>>({
+  ): Promise<helix.Response<helix.BroadcasterSubscription[]>> {
+    return execute<helix.Response<helix.BroadcasterSubscription[]>>({
       options,
       method: "GET",
       path: "/helix/subscriptions",
@@ -380,8 +380,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getAllStreamTags(
     query?: helix.AllStreamTagsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamTagData[]>> {
-    return execute<helix.Response<helix.StreamTagData[]>>({
+  ): Promise<helix.Response<helix.StreamTag[]>> {
+    return execute<helix.Response<helix.StreamTag[]>>({
       options,
       method: "GET",
       path: "/helix/tags/streams",
@@ -392,8 +392,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getStreamTags(
     query: helix.StreamTagsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.StreamTagData[]>> {
-    return execute<helix.Response<helix.StreamTagData[]>>({
+  ): Promise<helix.Response<helix.StreamTag[]>> {
+    return execute<helix.Response<helix.StreamTag[]>>({
       options,
       method: "GET",
       path: "/helix/streams/tags",
@@ -445,8 +445,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getUsers(
     query?: helix.UserQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.UserData[]>> {
-    return execute<helix.Response<helix.UserData[]>>({
+  ): Promise<helix.Response<helix.User[]>> {
+    return execute<helix.Response<helix.User[]>>({
       options,
       method: "GET",
       path: "/helix/users",
@@ -457,8 +457,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getUserFollows(
     query: helix.UserFollowsQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.UserFollowData[]>> {
-    return execute<helix.Response<helix.UserFollowData[]>>({
+  ): Promise<helix.Response<helix.UserFollow[]>> {
+    return execute<helix.Response<helix.UserFollow[]>>({
       options,
       method: "GET",
       path: "/helix/users/follows",
@@ -469,8 +469,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function updateUser(
     query?: helix.UpdateUserQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.UserData[]>> {
-    return execute<helix.Response<helix.UserData[]>>({
+  ): Promise<helix.Response<helix.User[]>> {
+    return execute<helix.Response<helix.User[]>>({
       options,
       method: "PUT",
       path: "/helix/users",
@@ -480,8 +480,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
 
   function getUserExtensions(
     options: Options = {},
-  ): Promise<helix.Response<helix.ExtensionData[]>> {
-    return execute<helix.Response<helix.ExtensionData[]>>({
+  ): Promise<helix.Response<helix.Extension[]>> {
+    return execute<helix.Response<helix.Extension[]>>({
       options,
       method: "GET",
       path: "/helix/users/extensions/list",
@@ -491,8 +491,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getUserActiveExtensions(
     query?: helix.UserActiveExtensionQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.UserExtensionData>> {
-    return execute<helix.Response<helix.UserExtensionData>>({
+  ): Promise<helix.Response<helix.UserExtension>> {
+    return execute<helix.Response<helix.UserExtension>>({
       options,
       method: "GET",
       path: "/helix/users/extensions",
@@ -503,8 +503,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function updateUserExtensions(
     body: helix.UpdateUserExtensionBody,
     options: Options = {},
-  ): Promise<helix.Response<helix.UserExtensionData>> {
-    return execute<helix.Response<helix.UserExtensionData>>({
+  ): Promise<helix.Response<helix.UserExtension>> {
+    return execute<helix.Response<helix.UserExtension>>({
       options,
       method: "PUT",
       path: "/helix/users/extensions",
@@ -516,8 +516,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getVideos(
     query: helix.VideoQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.VideoData[]>> {
-    return execute<helix.Response<helix.VideoData[]>>({
+  ): Promise<helix.Response<helix.Video[]>> {
+    return execute<helix.Response<helix.Video[]>>({
       options,
       method: "GET",
       path: "/helix/videos",
@@ -528,8 +528,8 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
   function getWebhookSubscriptions(
     query?: helix.PaginationQuery,
     options: Options = {},
-  ): Promise<helix.Response<helix.WebhookSubscriptionData[]>> {
-    return execute<helix.Response<helix.WebhookSubscriptionData[]>>({
+  ): Promise<helix.Response<helix.WebhookSubscription[]>> {
+    return execute<helix.Response<helix.WebhookSubscription[]>>({
       options,
       method: "GET",
       path: "/helix/webhooks/subscriptions",
