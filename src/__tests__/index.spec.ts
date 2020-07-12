@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import jsHelix from "../index";
 import * as helix from "../types/helix";
 
@@ -9,7 +10,7 @@ let TWITCH_USER: helix.User;
 describe("index", () => {
   beforeAll(async () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
-    TWITCH_USER = (await hapi.getUsers()).data[0];
+    TWITCH_USER = (await hapi.getUsers()).data![0];
   });
 
   it("Calls jsHelix with clientId and token", () => {
@@ -39,7 +40,7 @@ describe("index", () => {
         length: 30,
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((ad) => {
+      result.data!.forEach((ad) => {
         expect(ad.length).toBeDefined();
         expect(ad.message).toBeDefined();
         expect(ad.retryAfter).toBeDefined();
@@ -57,7 +58,7 @@ describe("index", () => {
     try {
       const result = await hapi.getExtensionAnalytics();
       expect(result.data).toBeDefined();
-      result.data.forEach((extension) => {
+      result.data!.forEach((extension) => {
         expect(extension.URL).toBeDefined();
         expect(extension.date_range).toBeDefined();
         expect(extension.extension_id).toBeDefined();
@@ -73,7 +74,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getCheermotes();
     expect(result.data).toBeDefined();
-    result.data.forEach((cheermote) => {
+    result.data!.forEach((cheermote) => {
       expect(cheermote.is_charitable).toBeDefined();
       expect(cheermote.last_updated).toBeDefined();
       expect(cheermote.order).toBeDefined();
@@ -89,7 +90,7 @@ describe("index", () => {
     expect(result.data).toBeDefined();
     expect(result.date_range).toBeDefined();
     expect(result.total).toBeDefined();
-    result.data.forEach((leaderboard) => {
+    result.data!.forEach((leaderboard) => {
       expect(leaderboard.rank).toBeDefined();
       expect(leaderboard.score).toBeDefined();
       expect(leaderboard.user_id).toBeDefined();
@@ -102,7 +103,7 @@ describe("index", () => {
     try {
       const result = await hapi.getGameAnalytics();
       expect(result.data).toBeDefined();
-      result.data.forEach((games) => {
+      result.data!.forEach((games) => {
         expect(games.URL).toBeDefined();
         expect(games.date_range).toBeDefined();
         expect(games.game_id).toBeDefined();
@@ -121,7 +122,7 @@ describe("index", () => {
         extension_id: "extension_id",
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((transaction) => {
+      result.data!.forEach((transaction) => {
         expect(transaction.broadcaster_id).toBeDefined();
         expect(transaction.broadcaster_name).toBeDefined();
         expect(transaction.id).toBeDefined();
@@ -150,7 +151,7 @@ describe("index", () => {
         broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((clip) => {
+      result.data!.forEach((clip) => {
         expect(clip.id).toBeDefined();
         expect(clip.edit_url).toBeDefined();
       });
@@ -168,7 +169,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((clip) => {
+    result.data!.forEach((clip) => {
       expect(clip.broadcaster_id).toBeDefined();
       expect(clip.broadcaster_name).toBeDefined();
       expect(clip.created_at).toBeDefined();
@@ -195,7 +196,7 @@ describe("index", () => {
         type: "bulk_drops_grant",
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((grant) => {
+      result.data!.forEach((grant) => {
         expect(grant.url).toBeDefined();
       });
     } catch (result) {
@@ -212,7 +213,7 @@ describe("index", () => {
         code: "code",
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((code) => {
+      result.data!.forEach((code) => {
         expect(code.code).toBeDefined();
         expect(code.status).toBeDefined();
       });
@@ -230,7 +231,7 @@ describe("index", () => {
         code: "code",
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((code) => {
+      result.data!.forEach((code) => {
         expect(code.code).toBeDefined();
         expect(code.status).toBeDefined();
       });
@@ -244,7 +245,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getTopGames();
     expect(result.data).toBeDefined();
-    result.data.forEach((game) => {
+    result.data!.forEach((game) => {
       expect(game.box_art_url).toBeDefined();
       expect(game.id).toBeDefined();
       expect(game.name).toBeDefined();
@@ -255,7 +256,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getGames({ name: ["Fortnite", "Call of Duty"] });
     expect(result.data).toBeDefined();
-    result.data.forEach((game) => {
+    result.data!.forEach((game) => {
       expect(game.box_art_url).toBeDefined();
       expect(game.id).toBeDefined();
       expect(game.name).toBeDefined();
@@ -280,7 +281,7 @@ describe("index", () => {
         },
       );
       expect(result.data).toBeDefined();
-      result.data.forEach((msg) => {
+      result.data!.forEach((msg) => {
         expect(msg.is_permitted).toBeDefined();
         expect(msg.msg_id).toBeDefined();
       });
@@ -296,7 +297,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((ban) => {
+    result.data!.forEach((ban) => {
       expect(ban.expires_at).toBeDefined();
       expect(ban.user_id).toBeDefined();
       expect(ban.user_name).toBeDefined();
@@ -309,7 +310,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((ban) => {
+    result.data!.forEach((ban) => {
       expect(ban.event_data).toBeDefined();
       expect(ban.event_data.broadcaster_id).toBeDefined();
       expect(ban.event_data.broadcaster_name).toBeDefined();
@@ -329,7 +330,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((mod) => {
+    result.data!.forEach((mod) => {
       expect(mod.user_id).toBeDefined();
       expect(mod.user_name).toBeDefined();
     });
@@ -341,7 +342,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((mod) => {
+    result.data!.forEach((mod) => {
       expect(mod.event_data).toBeDefined();
       expect(mod.event_data.broadcaster_id).toBeDefined();
       expect(mod.event_data.broadcaster_name).toBeDefined();
@@ -360,7 +361,7 @@ describe("index", () => {
       query: encodeURIComponent("Arts"),
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((category) => {
+    result.data!.forEach((category) => {
       expect(category.id).toBeDefined();
       expect(category.box_art_url).toBeDefined();
       expect(category.name).toBeDefined();
@@ -373,7 +374,7 @@ describe("index", () => {
       query: encodeURIComponent(TWITCH_USER.display_name),
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((channel) => {
+    result.data!.forEach((channel) => {
       expect(channel.broadcaster_language).toBeDefined();
       expect(channel.display_name).toBeDefined();
       expect(channel.game_id).toBeDefined();
@@ -395,7 +396,7 @@ describe("index", () => {
         broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((key) => {
+      result.data!.forEach((key) => {
         expect(key.stream_key).toBeDefined();
       });
     } catch (result) {
@@ -408,7 +409,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getStreams();
     expect(result.data).toBeDefined();
-    result.data.forEach((stream) => {
+    result.data!.forEach((stream) => {
       expect(stream.game_id).toBeDefined();
       expect(stream.id).toBeDefined();
       expect(stream.language).toBeDefined();
@@ -426,7 +427,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getStreamsMetadata();
     expect(result.data).toBeDefined();
-    result.data.forEach((stream) => {
+    result.data!.forEach((stream) => {
       expect(stream.user_id).toBeDefined();
       expect(stream.user_name).toBeDefined();
     });
@@ -437,7 +438,7 @@ describe("index", () => {
     try {
       const result = await hapi.createStreamMarker({ user_id: TWITCH_USER.id });
       expect(result.data).toBeDefined();
-      result.data.forEach((marker) => {
+      result.data!.forEach((marker) => {
         expect(marker.created_at).toBeDefined();
         expect(marker.description).toBeDefined();
         expect(marker.id).toBeDefined();
@@ -458,7 +459,7 @@ describe("index", () => {
         user_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((stream) => {
+      result.data!.forEach((stream) => {
         expect(stream.user_id).toBeDefined();
         expect(stream.user_name).toBeDefined();
         expect(stream.videos).toBeDefined();
@@ -488,7 +489,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((channel) => {
+    result.data!.forEach((channel) => {
       expect(channel.broadcaster_id).toBeDefined();
       expect(channel.broadcaster_language).toBeDefined();
       expect(channel.game_id).toBeDefined();
@@ -518,7 +519,7 @@ describe("index", () => {
     ];
     const tierMatcher = new RegExp(`(${tiers.join("|")})`);
     expect(result.data).toBeDefined();
-    result.data.forEach((sub) => {
+    result.data!.forEach((sub) => {
       expect(sub.broadcaster_id).toBeDefined();
       expect(sub.broadcaster_name).toBeDefined();
       expect(sub.is_gift).toBeDefined();
@@ -533,7 +534,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getAllStreamTags();
     expect(result.data).toBeDefined();
-    result.data.forEach((tag) => {
+    result.data!.forEach((tag) => {
       expect(tag.is_auto).toBeDefined();
       expect(tag.localization_descriptions).toBeDefined();
       expect(tag.localization_names).toBeDefined();
@@ -547,7 +548,7 @@ describe("index", () => {
       broadcaster_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((tag) => {
+    result.data!.forEach((tag) => {
       expect(tag.is_auto).toBeDefined();
       expect(tag.localization_descriptions).toBeDefined();
       expect(tag.localization_names).toBeDefined();
@@ -595,7 +596,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUsers();
     expect(result.data).toBeDefined();
-    result.data.forEach((user) => {
+    result.data!.forEach((user) => {
       expect(user.broadcaster_type).toBeDefined();
       expect(user.description).toBeDefined();
       expect(user.display_name).toBeDefined();
@@ -615,7 +616,7 @@ describe("index", () => {
       from_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((follow) => {
+    result.data!.forEach((follow) => {
       expect(follow.followed_at).toBeDefined();
       expect(follow.from_id).toBeDefined();
       expect(follow.from_name).toBeDefined();
@@ -630,7 +631,7 @@ describe("index", () => {
       description: TWITCH_USER.description,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((user) => {
+    result.data!.forEach((user) => {
       expect(user.broadcaster_type).toBeDefined();
       expect(user.description).toBeDefined();
       expect(user.display_name).toBeDefined();
@@ -648,7 +649,7 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUserExtensions();
     expect(result.data).toBeDefined();
-    result.data.forEach((extension) => {
+    result.data!.forEach((extension) => {
       expect(extension.can_activate).toBeDefined();
       expect(extension.id).toBeDefined();
       expect(extension.name).toBeDefined();
@@ -661,10 +662,10 @@ describe("index", () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     const result = await hapi.getUserActiveExtensions();
     expect(result.data).toBeDefined();
-    expect(result.data.component).toBeDefined();
-    expect(result.data.overlay).toBeDefined();
-    expect(result.data.panel).toBeDefined();
-    Object.values(result.data).forEach(
+    expect(result.data!.component).toBeDefined();
+    expect(result.data!.overlay).toBeDefined();
+    expect(result.data!.panel).toBeDefined();
+    Object.values(result.data!).forEach(
       (extensionType: helix.map<helix.DetailedExtension>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
@@ -688,10 +689,10 @@ describe("index", () => {
       },
     });
     expect(result.data).toBeDefined();
-    expect(result.data.component).toBeDefined();
-    expect(result.data.overlay).toBeDefined();
-    expect(result.data.panel).toBeDefined();
-    Object.values(result.data).forEach(
+    expect(result.data!.component).toBeDefined();
+    expect(result.data!.overlay).toBeDefined();
+    expect(result.data!.panel).toBeDefined();
+    Object.values(result.data!).forEach(
       (extensionType: helix.map<helix.DetailedExtension>) => {
         Object.values(extensionType).forEach((extension) => {
           expect(extension.active).toBeDefined();
@@ -711,7 +712,7 @@ describe("index", () => {
       user_id: TWITCH_USER.id,
     });
     expect(result.data).toBeDefined();
-    result.data.forEach((video) => {
+    result.data!.forEach((video) => {
       expect(video.created_at).toBeDefined();
       expect(video.description).toBeDefined();
       expect(video.duration).toBeDefined();
@@ -734,7 +735,7 @@ describe("index", () => {
     try {
       const result = await hapi.getWebhookSubscriptions();
       expect(result.data).toBeDefined();
-      result.data.forEach((whsub) => {
+      result.data!.forEach((whsub) => {
         expect(whsub.callback).toBeDefined();
         expect(whsub.expires_at).toBeDefined();
         expect(whsub.topic).toBeDefined();
@@ -752,7 +753,7 @@ describe("index", () => {
         broadcaster_id: TWITCH_USER.id,
       });
       expect(result.data).toBeDefined();
-      result.data.forEach((hype) => {
+      result.data!.forEach((hype) => {
         expect(hype.event_data).toBeDefined();
         expect(hype.event_data.broadcaster_id).toBeDefined();
         expect(hype.event_data.cooldown_end_time).toBeDefined();
