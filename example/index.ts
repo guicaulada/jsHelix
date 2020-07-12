@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import jsHelix from "../src"; // "jshelix"
 
 const TWITCH_CLIENT = process.env.TWITCH_CLIENT;
@@ -9,7 +10,7 @@ hapi
   .getUsers({ login: "Sighmir" })
   .then((users) => {
     hapi
-      .getUserFollows({ from_id: users.data[0].id })
+      .getUserFollows({ from_id: users.data![0].id })
       .then((data) => {
         console.log(data);
       })
