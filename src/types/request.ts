@@ -19,7 +19,7 @@ export interface RequestHeaders {
   [key: string]: string;
 }
 
-export interface RequestOptions {
+export interface RequestArguments {
   method: RequestMethod;
   url: string;
   query?: unknown;
@@ -28,11 +28,11 @@ export interface RequestOptions {
 }
 
 export interface RequestMessage {
-  message: string;
+  message?: string;
 }
 
 export interface RequestData<T> {
-  data: T;
+  data?: T;
 }
 
 export interface RequestResponse<T = undefined>
@@ -40,4 +40,5 @@ export interface RequestResponse<T = undefined>
     RequestData<T> {
   headers: RequestHeaders;
   status: number;
+  error?: string;
 }
