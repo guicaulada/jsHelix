@@ -1,6 +1,6 @@
 {
   "name": "jshelix",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Typescript Helix API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -52,7 +52,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
-    "ts-loader": "^7.0.5",
+    "ts-loader": "^8.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6",
     "webpack": "^4.43.0",
@@ -67,10 +67,15 @@
     }
   },
   "lint-staged": {
-    "*.{ts,js}": ["prettier --write", "yarn lint --fix"]
+    "*.{ts,js}": [
+      "prettier --write",
+      "yarn lint --fix"
+    ]
   },
   "jest-junit": {
     "outputDirectory": "coverage"
   },
-  "keywords": ["helix"]
+  "keywords": [
+    "helix"
+  ]
 }
