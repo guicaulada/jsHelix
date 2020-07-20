@@ -425,12 +425,19 @@ describe("index", () => {
 
   it("Calls getStreamsMetadata with clientId and token", async () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
-    const result = await hapi.getStreamsMetadata();
-    expect(result.data).toBeDefined();
-    result.data!.forEach((stream) => {
-      expect(stream.user_id).toBeDefined();
-      expect(stream.user_name).toBeDefined();
-    });
+    try {
+      const result = await hapi.getStreamsMetadata();
+      expect(result.data).toBeDefined();
+      result.data!.forEach((stream) => {
+        expect(stream.user_id).toBeDefined();
+        expect(stream.user_name).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual(
+        "Endpoint deprecated: https://discuss.dev.twitch.tv/t/deprecation-of-the-helix-get-streams-metadata-endpoint/26407",
+      );
+    }
   });
 
   it("Calls createStreamMarker with clientId and token", async () => {
