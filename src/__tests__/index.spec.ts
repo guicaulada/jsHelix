@@ -581,7 +581,7 @@ describe("index", () => {
       expect(result.status).toEqual(204);
     } catch (result) {
       expect(result.error).toBeDefined();
-      expect(result.message).toEqual("Missing scope: user:edit:follows");
+      expect(result.message).toEqual("target_user_id can not be from_user_id");
     }
   });
 
@@ -595,7 +595,7 @@ describe("index", () => {
       expect(result.status).toEqual(204);
     } catch (result) {
       expect(result.error).toBeDefined();
-      expect(result.message).toEqual("Missing scope: user:edit:follows");
+      expect(result.message).toEqual("target_user_id can not be from_user_id");
     }
   });
 
