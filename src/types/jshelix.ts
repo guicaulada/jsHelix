@@ -48,6 +48,35 @@ export interface JSHelix {
     options?: Options,
   ) => Promise<helix.Response<helix.ExtensionTransaction[]>>;
 
+  // Channel Points
+  createCustomReward: (
+    query: helix.CreateCustomRewardQuery,
+    body: helix.CreateCustomRewardBody,
+    options?: Options,
+  ) => Promise<helix.Response<helix.CustomReward[]>>;
+  deleteCustomReward: (
+    query: helix.DeleteCustomRewardQuery,
+    options?: Options,
+  ) => Promise<RequestResponse>;
+  getCustomRewards: (
+    query: helix.GetCustomRewardsQuery,
+    options?: Options,
+  ) => Promise<helix.Response<helix.CustomReward[]>>;
+  getCustomRewardRedemption: (
+    query: helix.GetCustomRewardRedemptionQuery,
+    options?: Options,
+  ) => Promise<helix.Response<helix.CustomRewardRedemption[]>>;
+  updateCustomReward: (
+    query: helix.UpdateCustomRewardQuery,
+    body: helix.UpdateCustomRewardBody,
+    options?: Options,
+  ) => Promise<helix.Response<helix.CustomReward[]>>;
+  updateCustomRewardRedemptionStatus: (
+    query: helix.UpdateCustomRewardRedemptionStatusQuery,
+    body: helix.UpdateCustomRewardRedemptionStatusBody,
+    options?: Options,
+  ) => Promise<helix.Response<helix.CustomRewardRedemption[]>>;
+
   // Clip
   createClip: (
     query: helix.CreateClipQuery,

@@ -57,6 +57,12 @@ export enum SubscriptionTier {
   "Tier 3" = "3000",
 }
 
+export type RedemptionStatus = "UNFULFILLED" | "FULFILLED" | "CANCELED";
+
+export type RedemptionUpdateStatus = "FULFILLED" | "CANCELED";
+
+export type RedemptionSort = "OLDEST" | "NEWEST";
+
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export interface Pagination {
@@ -190,6 +196,122 @@ export interface ExtensionTransaction {
   user_name: string;
   product_type: "BITS_IN_EXTENSION";
   product_data: ExtensionTransactionProduct;
+}
+
+export interface CreateCustomRewardQuery {
+  broadcaster_id: string;
+}
+
+export interface CreateCustomRewardBody extends UpdateCustomRewardBody {
+  title: string;
+  cost: integer;
+}
+
+export interface RewardImage {
+  url_1x: string;
+  url_2x: string;
+  url_4x: string;
+}
+
+export interface CustomReward {
+  broadcaster_name: string;
+  broadcaster_id: string;
+  id: string;
+  image: RewardImage;
+  background_color: string;
+  is_enabled: boolean;
+  cost: integer;
+  title: string;
+  prompt: string;
+  is_user_input_required: boolean;
+  max_per_stream_setting: {
+    is_enabled: boolean;
+    max_per_stream: integer;
+  };
+  max_per_user_per_stream_setting: {
+    is_enabled: boolean;
+    max_per_user_per_stream: integer;
+  };
+  global_cooldown_setting: {
+    is_enabled: boolean;
+    global_cooldown_seconds: integer;
+  };
+  is_paused: boolean;
+  is_in_stock: boolean;
+  default_image: RewardImage;
+  should_redemptions_skip_request_queue: boolean;
+  redemptions_redeemed_current_stream?: integer;
+  cooldown_expires_at?: string;
+}
+
+export interface DeleteCustomRewardQuery {
+  broadcaster_id: string;
+  id: string;
+}
+
+export interface GetCustomRewardsQuery {
+  broadcaster_id: string;
+  id?: repeatable;
+  only_manageable_rewards?: boolean;
+}
+
+export interface GetCustomRewardRedemptionQuery extends PaginationQuery {
+  broadcaster_id: string;
+  reward_id: string;
+  id?: repeatable;
+  status?: RedemptionStatus;
+  sort?: RedemptionSort;
+}
+
+export interface RedemptionReward {
+  id: string;
+  title: string;
+  prompt: string;
+  cost: integer;
+}
+
+export interface CustomRewardRedemption {
+  broadcaster_name: string;
+  broadcaster_id: string;
+  id: string;
+  user_id: string;
+  user_name: string;
+  user_input: string;
+  status: string;
+  redeemed_at: string;
+  reward: RedemptionReward;
+}
+
+export interface UpdateCustomRewardQuery {
+  broadcaster_id: string;
+  id: string;
+}
+
+export interface UpdateCustomRewardBody {
+  title?: string;
+  prompt?: string;
+  cost?: integer;
+  background_color?: string;
+  is_enabled?: boolean;
+  is_user_input_required?: boolean;
+  is_max_per_stream_enabled?: boolean;
+  max_per_stream?: integer;
+  is_max_per_user_per_stream_enabled?: boolean;
+  max_per_user_per_stream?: integer;
+  is_global_cooldown_enabled?: boolean;
+  global_cooldown_seconds?: integer;
+  is_paused?: boolean;
+  should_redemptions_skip_request_queue?: boolean;
+}
+
+export interface UpdateCustomRewardRedemptionStatusQuery {
+  broadcaster_id: string;
+  reward_id: string;
+  id: repeatable;
+}
+
+export interface UpdateCustomRewardRedemptionStatusBody {
+  status: RedemptionUpdateStatus;
 }
 
 export interface CreateClipQuery {

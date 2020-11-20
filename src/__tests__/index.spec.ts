@@ -144,6 +144,242 @@ describe("index", () => {
     }
   });
 
+  it("Calls createCustomReward with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.createCustomReward(
+        {
+          broadcaster_id: TWITCH_USER.id,
+        },
+        { title: "reward_title", cost: 100000 },
+      );
+      expect(result.data).toBeDefined();
+      result.data!.forEach((reward) => {
+        expect(reward.background_color).toBeDefined();
+        expect(reward.broadcaster_id).toBeDefined();
+        expect(reward.broadcaster_name).toBeDefined();
+        expect(reward.cooldown_expires_at).toBeDefined();
+        expect(reward.cost).toBeDefined();
+        expect(reward.default_image).toBeDefined();
+        expect(reward.default_image.url_1x).toBeDefined();
+        expect(reward.default_image.url_2x).toBeDefined();
+        expect(reward.default_image.url_4x).toBeDefined();
+        expect(reward.global_cooldown_setting).toBeDefined();
+        expect(
+          reward.global_cooldown_setting.global_cooldown_seconds,
+        ).toBeDefined();
+        expect(reward.global_cooldown_setting.is_enabled).toBeDefined();
+        expect(reward.id).toBeDefined();
+        expect(reward.image.url_1x).toBeDefined();
+        expect(reward.image.url_2x).toBeDefined();
+        expect(reward.image.url_4x).toBeDefined();
+        expect(reward.is_enabled).toBeDefined();
+        expect(reward.is_in_stock).toBeDefined();
+        expect(reward.is_paused).toBeDefined();
+        expect(reward.is_user_input_required).toBeDefined();
+        expect(reward.max_per_stream_setting).toBeDefined();
+        expect(reward.max_per_stream_setting.is_enabled).toBeDefined();
+        expect(reward.max_per_stream_setting.max_per_stream).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting.is_enabled).toBeDefined();
+        expect(
+          reward.max_per_user_per_stream_setting.max_per_user_per_stream,
+        ).toBeDefined();
+        expect(reward.prompt).toBeDefined();
+        expect(reward.redemptions_redeemed_current_stream).toBeDefined();
+        expect(reward.should_redemptions_skip_request_queue).toBeDefined();
+        expect(reward.title).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual(
+        "channel points are not available for the broadcaster",
+      );
+    }
+  });
+
+  it("Calls deleteCustomReward with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.deleteCustomReward({
+        broadcaster_id: TWITCH_USER.id,
+        id: "reward_id",
+      });
+      expect(result.status).toEqual(204);
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual("requested id was not found");
+    }
+  });
+
+  it("Calls getCustomRewards with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.getCustomRewards({
+        broadcaster_id: TWITCH_USER.id,
+        id: ["reward_id", "reward_id2"],
+        only_manageable_rewards: true,
+      });
+      expect(result.data).toBeDefined();
+      result.data!.forEach((reward) => {
+        expect(reward.background_color).toBeDefined();
+        expect(reward.broadcaster_id).toBeDefined();
+        expect(reward.broadcaster_name).toBeDefined();
+        expect(reward.cooldown_expires_at).toBeDefined();
+        expect(reward.cost).toBeDefined();
+        expect(reward.default_image).toBeDefined();
+        expect(reward.default_image.url_1x).toBeDefined();
+        expect(reward.default_image.url_2x).toBeDefined();
+        expect(reward.default_image.url_4x).toBeDefined();
+        expect(reward.global_cooldown_setting).toBeDefined();
+        expect(
+          reward.global_cooldown_setting.global_cooldown_seconds,
+        ).toBeDefined();
+        expect(reward.global_cooldown_setting.is_enabled).toBeDefined();
+        expect(reward.id).toBeDefined();
+        expect(reward.image.url_1x).toBeDefined();
+        expect(reward.image.url_2x).toBeDefined();
+        expect(reward.image.url_4x).toBeDefined();
+        expect(reward.is_enabled).toBeDefined();
+        expect(reward.is_in_stock).toBeDefined();
+        expect(reward.is_paused).toBeDefined();
+        expect(reward.is_user_input_required).toBeDefined();
+        expect(reward.max_per_stream_setting).toBeDefined();
+        expect(reward.max_per_stream_setting.is_enabled).toBeDefined();
+        expect(reward.max_per_stream_setting.max_per_stream).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting.is_enabled).toBeDefined();
+        expect(
+          reward.max_per_user_per_stream_setting.max_per_user_per_stream,
+        ).toBeDefined();
+        expect(reward.prompt).toBeDefined();
+        expect(reward.redemptions_redeemed_current_stream).toBeDefined();
+        expect(reward.should_redemptions_skip_request_queue).toBeDefined();
+        expect(reward.title).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual(
+        "channel points are not available for the broadcaster",
+      );
+    }
+  });
+
+  it("Calls getCustomRewardRedemption with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.getCustomRewardRedemption({
+        broadcaster_id: TWITCH_USER.id,
+        reward_id: "reward_id",
+      });
+      expect(result.data).toBeDefined();
+      result.data!.forEach((reward) => {
+        expect(reward.broadcaster_id).toBeDefined();
+        expect(reward.broadcaster_name).toBeDefined();
+        expect(reward.id).toBeDefined();
+        expect(reward.redeemed_at).toBeDefined();
+        expect(reward.reward).toBeDefined();
+        expect(reward.reward.cost).toBeDefined();
+        expect(reward.reward.id).toBeDefined();
+        expect(reward.reward.prompt).toBeDefined();
+        expect(reward.reward.title).toBeDefined();
+        expect(reward.status).toBeDefined();
+        expect(reward.user_id).toBeDefined();
+        expect(reward.user_input).toBeDefined();
+        expect(reward.user_name).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual("missing redemption status");
+    }
+  });
+
+  it("Calls updateCustomReward with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.updateCustomReward(
+        {
+          broadcaster_id: TWITCH_USER.id,
+          id: "reward_id",
+        },
+        { title: "reward_title" },
+      );
+      expect(result.data).toBeDefined();
+      result.data!.forEach((reward) => {
+        expect(reward.background_color).toBeDefined();
+        expect(reward.broadcaster_id).toBeDefined();
+        expect(reward.broadcaster_name).toBeDefined();
+        expect(reward.cooldown_expires_at).toBeDefined();
+        expect(reward.cost).toBeDefined();
+        expect(reward.default_image).toBeDefined();
+        expect(reward.default_image.url_1x).toBeDefined();
+        expect(reward.default_image.url_2x).toBeDefined();
+        expect(reward.default_image.url_4x).toBeDefined();
+        expect(reward.global_cooldown_setting).toBeDefined();
+        expect(
+          reward.global_cooldown_setting.global_cooldown_seconds,
+        ).toBeDefined();
+        expect(reward.global_cooldown_setting.is_enabled).toBeDefined();
+        expect(reward.id).toBeDefined();
+        expect(reward.image.url_1x).toBeDefined();
+        expect(reward.image.url_2x).toBeDefined();
+        expect(reward.image.url_4x).toBeDefined();
+        expect(reward.is_enabled).toBeDefined();
+        expect(reward.is_in_stock).toBeDefined();
+        expect(reward.is_paused).toBeDefined();
+        expect(reward.is_user_input_required).toBeDefined();
+        expect(reward.max_per_stream_setting).toBeDefined();
+        expect(reward.max_per_stream_setting.is_enabled).toBeDefined();
+        expect(reward.max_per_stream_setting.max_per_stream).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting).toBeDefined();
+        expect(reward.max_per_user_per_stream_setting.is_enabled).toBeDefined();
+        expect(
+          reward.max_per_user_per_stream_setting.max_per_user_per_stream,
+        ).toBeDefined();
+        expect(reward.prompt).toBeDefined();
+        expect(reward.redemptions_redeemed_current_stream).toBeDefined();
+        expect(reward.should_redemptions_skip_request_queue).toBeDefined();
+        expect(reward.title).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual("requested id was not found");
+    }
+  });
+
+  it("Calls updateCustomRewardRedemptionStatus with clientId and token", async () => {
+    const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
+    try {
+      const result = await hapi.updateCustomRewardRedemptionStatus(
+        {
+          broadcaster_id: TWITCH_USER.id,
+          reward_id: "reward_id",
+          id: ["redemption_id1", "redemption_id2"],
+        },
+        { status: "CANCELED" },
+      );
+      expect(result.data).toBeDefined();
+      result.data!.forEach((reward) => {
+        expect(reward.broadcaster_id).toBeDefined();
+        expect(reward.broadcaster_name).toBeDefined();
+        expect(reward.id).toBeDefined();
+        expect(reward.redeemed_at).toBeDefined();
+        expect(reward.reward).toBeDefined();
+        expect(reward.reward.cost).toBeDefined();
+        expect(reward.reward.id).toBeDefined();
+        expect(reward.reward.prompt).toBeDefined();
+        expect(reward.reward.title).toBeDefined();
+        expect(reward.status).toBeDefined();
+        expect(reward.user_id).toBeDefined();
+        expect(reward.user_input).toBeDefined();
+        expect(reward.user_name).toBeDefined();
+      });
+    } catch (result) {
+      expect(result.error).toBeDefined();
+      expect(result.message).toEqual("requested id was not found");
+    }
+  });
+
   it("Calls createClip with clientId and token", async () => {
     const hapi = jsHelix(TWITCH_CLIENT, TWITCH_TOKEN);
     try {

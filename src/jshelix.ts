@@ -102,6 +102,85 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     });
   }
 
+  // Channel Points
+  function createCustomReward(
+    query: helix.CreateCustomRewardQuery,
+    body: helix.CreateCustomRewardBody,
+    options: Options = {},
+  ): Promise<helix.Response<helix.CustomReward[]>> {
+    return execute<helix.CustomReward[]>({
+      options,
+      method: "POST",
+      path: "/helix/channel_points/custom_rewards",
+      query,
+      body,
+    });
+  }
+
+  function deleteCustomReward(
+    query: helix.DeleteCustomRewardQuery,
+    options: Options = {},
+  ): Promise<RequestResponse> {
+    return execute({
+      options,
+      method: "DELETE",
+      path: "/helix/channel_points/custom_rewards",
+      query,
+    });
+  }
+
+  function getCustomRewards(
+    query: helix.GetCustomRewardsQuery,
+    options: Options = {},
+  ): Promise<helix.Response<helix.CustomReward[]>> {
+    return execute<helix.CustomReward[]>({
+      options,
+      method: "GET",
+      path: "/helix/channel_points/custom_rewards",
+      query,
+    });
+  }
+
+  function getCustomRewardRedemption(
+    query: helix.GetCustomRewardRedemptionQuery,
+    options: Options = {},
+  ): Promise<helix.Response<helix.CustomRewardRedemption[]>> {
+    return execute<helix.CustomRewardRedemption[]>({
+      options,
+      method: "GET",
+      path: "/helix/channel_points/custom_rewards/redemptions",
+      query,
+    });
+  }
+
+  function updateCustomReward(
+    query: helix.UpdateCustomRewardQuery,
+    body: helix.UpdateCustomRewardBody,
+    options: Options = {},
+  ): Promise<helix.Response<helix.CustomReward[]>> {
+    return execute<helix.CustomReward[]>({
+      options,
+      method: "PATCH",
+      path: "/helix/channel_points/custom_rewards",
+      query,
+      body,
+    });
+  }
+
+  function updateCustomRewardRedemptionStatus(
+    query: helix.UpdateCustomRewardRedemptionStatusQuery,
+    body: helix.UpdateCustomRewardRedemptionStatusBody,
+    options: Options = {},
+  ): Promise<helix.Response<helix.CustomRewardRedemption[]>> {
+    return execute<helix.CustomRewardRedemption[]>({
+      options,
+      method: "PATCH",
+      path: "/helix/channel_points/custom_rewards",
+      query,
+      body,
+    });
+  }
+
   // Clip
   function createClip(
     query: helix.CreateClipQuery,
@@ -564,6 +643,14 @@ export default function jsHelix(clientId: string, token?: string): JSHelix {
     getCheermotes,
     getBitsLeaderboard,
     getExtensionsTransactions,
+
+    // Channel Points
+    createCustomReward,
+    deleteCustomReward,
+    getCustomRewards,
+    getCustomRewardRedemption,
+    updateCustomReward,
+    updateCustomRewardRedemptionStatus,
 
     // Clip
     createClip,
